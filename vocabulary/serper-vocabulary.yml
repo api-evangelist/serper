@@ -1,0 +1,219 @@
+vocabulary:
+  name: Serper API Vocabulary
+  description: >-
+    Controlled vocabulary of terms, concepts, and domain-specific language
+    used across the Serper Google Search API.
+  version: 1.0.0
+  url: https://serper.dev
+
+terms:
+
+  - term: SERP
+    label: Search Engine Results Page
+    definition: >-
+      The page displayed by a search engine in response to a user query.
+      Serper returns SERP data as structured JSON rather than HTML.
+    category: core
+
+  - term: organic
+    label: Organic Results
+    definition: >-
+      Non-paid web search results ranked by Google's algorithm based on
+      relevance, authority, and other ranking signals. Returned as an
+      array of result objects.
+    category: search-result-type
+
+  - term: knowledgeGraph
+    label: Knowledge Graph
+    definition: >-
+      A rich structured information panel shown in Google search results
+      that summarizes information about an entity (person, place, organization,
+      concept) from multiple sources.
+    category: search-result-type
+
+  - term: answerBox
+    label: Answer Box / Featured Snippet
+    definition: >-
+      A special search result displayed at the top of Google's results page
+      that directly answers a user's question with an excerpt from a web page.
+    category: search-result-type
+
+  - term: peopleAlsoAsk
+    label: People Also Ask
+    definition: >-
+      A SERP feature showing related questions that other users frequently
+      search for along with brief answers, used to expand on the original query.
+    category: search-result-type
+
+  - term: relatedSearches
+    label: Related Searches
+    definition: >-
+      A list of related search queries shown at the bottom of Google search
+      results, useful for discovering adjacent topics and query variations.
+    category: search-result-type
+
+  - term: sitelinks
+    label: Sitelinks
+    definition: >-
+      Sub-links appearing below a main organic search result, pointing to
+      specific pages within the same domain. Shown for well-known sites.
+    category: search-result-feature
+
+  - term: q
+    label: Query
+    definition: >-
+      The search query string sent to the API. Required parameter for all
+      Serper endpoints.
+    category: request-parameter
+
+  - term: gl
+    label: Geolocation
+    definition: >-
+      ISO 3166-1 alpha-2 country code specifying the country context for
+      search results. Defaults to 'us' (United States).
+    category: request-parameter
+
+  - term: hl
+    label: Host Language
+    definition: >-
+      ISO 639-1 language code specifying the language for search results.
+      Defaults to 'en' (English).
+    category: request-parameter
+
+  - term: num
+    label: Number of Results
+    definition: >-
+      The number of organic search results to return per request (1-100).
+      Defaults to 10.
+    category: request-parameter
+
+  - term: page
+    label: Page
+    definition: >-
+      The page number for paginated results. Defaults to 1.
+    category: request-parameter
+
+  - term: tbs
+    label: Time-Based Search
+    definition: >-
+      Filter parameter restricting results to a specific time range.
+      Values include qdr:h (hour), qdr:d (day), qdr:w (week),
+      qdr:m (month), qdr:y (year).
+    category: request-parameter
+
+  - term: ll
+    label: Latitude/Longitude
+    definition: >-
+      Coordinate string specifying a geographic location for maps and places
+      searches. Format: @{latitude},{longitude},{zoom}z.
+    category: request-parameter
+
+  - term: autocorrect
+    label: Autocorrect
+    definition: >-
+      Boolean flag enabling Google's spell-correction for the query.
+      Defaults to true.
+    category: request-parameter
+
+  - term: X-API-KEY
+    label: API Key Header
+    definition: >-
+      HTTP request header used to authenticate all Serper API requests.
+      The value is the user's Serper API key obtained from the dashboard.
+    category: authentication
+
+  - term: credit
+    label: API Credit
+    definition: >-
+      The unit of consumption for the Serper API. Each successful search
+      query consumes one credit. The free tier provides 2,500 credits.
+    category: billing
+
+  - term: citedBy
+    label: Citation Count
+    definition: >-
+      Number of academic publications that have cited a given paper.
+      Returned by the Scholar endpoint for academic results.
+    category: scholar
+
+  - term: publicationNumber
+    label: Publication Number
+    definition: >-
+      The official patent identifier (e.g., US10678858B2). Returned by
+      the Patents endpoint for patent records.
+    category: patents
+
+  - term: priorityDate
+    label: Priority Date
+    definition: >-
+      The earliest filing date that establishes patent priority. Returned
+      by the Patents endpoint.
+    category: patents
+
+  - term: filingDate
+    label: Filing Date
+    definition: >-
+      The date a patent application was officially filed with the patent office.
+    category: patents
+
+  - term: grantDate
+    label: Grant Date
+    definition: >-
+      The date a patent was officially granted/issued by the patent office.
+    category: patents
+
+  - term: assignee
+    label: Patent Assignee
+    definition: >-
+      The entity (company or individual) to whom the patent rights have been
+      assigned. Often the employer of the inventor.
+    category: patents
+
+  - term: productId
+    label: Product ID
+    definition: >-
+      Google's internal identifier for a product in Shopping search results.
+    category: shopping
+
+  - term: offers
+    label: Merchant Offers
+    definition: >-
+      The number of merchants offering a given product in Shopping results
+      (e.g., "10+" indicates ten or more sellers).
+    category: shopping
+
+  - term: suggestions
+    label: Autocomplete Suggestions
+    definition: >-
+      An ordered list of suggested search query completions returned by the
+      Autocomplete endpoint based on a partial query string.
+    category: autocomplete
+
+  - term: snippet
+    label: Snippet
+    definition: >-
+      A brief excerpt or summary of a web page's content shown in search
+      results. Also used in news, scholar, and patents results.
+    category: search-result-feature
+
+  - term: position
+    label: Result Position
+    definition: >-
+      The rank/order of a result within its category (1-based). Position 1
+      is the highest-ranked result.
+    category: search-result-feature
+
+  - term: imageUrl
+    label: Image URL
+    definition: >-
+      A URL pointing to an image associated with a result — the main image
+      for image results, or a thumbnail for news, shopping, and knowledge
+      graph results.
+    category: search-result-feature
+
+  - term: thumbnailUrl
+    label: Thumbnail URL
+    definition: >-
+      A URL pointing to a smaller preview image for a result, used in image,
+      video, shopping, and patent results.
+    category: search-result-feature

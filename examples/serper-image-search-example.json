@@ -1,0 +1,42 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/images",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "lion",
+      "gl": "us",
+      "hl": "en"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "searchParameters": {
+        "q": "lion",
+        "gl": "us",
+        "hl": "en",
+        "type": "images"
+      },
+      "images": [
+        {
+          "title": "Lion - Wikipedia",
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Lion_waiting_in_Namibia.jpg/1200px-Lion_waiting_in_Namibia.jpg",
+          "imageWidth": 1200,
+          "imageHeight": 900,
+          "thumbnailUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnAzLj56y8example",
+          "thumbnailWidth": 259,
+          "thumbnailHeight": 194,
+          "source": "Wikipedia",
+          "domain": "en.wikipedia.org",
+          "link": "https://en.wikipedia.org/wiki/Lion",
+          "googleUrl": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fexample",
+          "position": 1
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/news",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "technology news",
+      "gl": "us",
+      "hl": "en"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "searchParameters": {
+        "q": "technology news",
+        "gl": "us",
+        "hl": "en",
+        "type": "news"
+      },
+      "news": [
+        {
+          "title": "ALAR: Alarum Technologies: Driving Growth Through Expanding Offerings",
+          "link": "https://scr.zacks.com/news/news-details/2024/ALAR-example",
+          "snippet": "Alarum Technologies Ltd. operates as a leading global supplier of internet access and...",
+          "date": "2 weeks ago",
+          "source": "Zacks Small Cap Research",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoSmAkg_example",
+          "position": 1
+        }
+      ]
+    }
+  }
+}

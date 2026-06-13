@@ -1,0 +1,82 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/search",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "google search",
+      "gl": "us",
+      "hl": "en",
+      "num": 10
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "searchParameters": {
+        "q": "google search",
+        "gl": "us",
+        "hl": "en",
+        "type": "search",
+        "num": 10
+      },
+      "knowledgeGraph": {
+        "title": "Google Search",
+        "type": "Website",
+        "website": "https://google.com/",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmIN-ig-example",
+        "description": "Google Search is a search engine provided and operated by Google. Handling more than 3.5 billion searches per day, it has a 92% share of the global search engine market.",
+        "descriptionSource": "Wikipedia",
+        "descriptionLink": "https://en.wikipedia.org/wiki/Google_Search",
+        "attributes": {
+          "Written in": "Python, C, and C++",
+          "Category": "Search engine",
+          "Date launched": "1998"
+        }
+      },
+      "organic": [
+        {
+          "title": "Google",
+          "link": "https://www.google.com/?gws_rd=ssl",
+          "snippet": "Search the world's information, including webpages, images, videos and more.",
+          "position": 1,
+          "sitelinks": [
+            {
+              "title": "My Activity",
+              "link": "https://myactivity.google.com/"
+            },
+            {
+              "title": "Images",
+              "link": "https://images.google.com/"
+            }
+          ]
+        },
+        {
+          "title": "Google Search - Stay in the Know with Your Google App",
+          "link": "https://www.google.com/search/about/",
+          "snippet": "Discover keeps you up to date on all your favorite topics.",
+          "position": 2
+        }
+      ],
+      "peopleAlsoAsk": [
+        {
+          "question": "How does Google Search work?",
+          "snippet": "Google Search uses automated software known as web crawlers that explore the web regularly to find pages to add to Google's index.",
+          "title": "How Search works",
+          "link": "https://www.google.com/search/howsearchworks/"
+        }
+      ],
+      "relatedSearches": [
+        {
+          "query": "google search engine"
+        },
+        {
+          "query": "google search tips"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/serper/main/json-schema/serper-search-response.json",
+  "title": "Serper Search Response",
+  "description": "Response schema for the Serper web search endpoint",
+  "type": "object",
+  "properties": {
+    "searchParameters": {
+      "type": "object",
+      "description": "Echo of the search parameters used.",
+      "properties": {
+        "q": { "type": "string" },
+        "gl": { "type": "string" },
+        "hl": { "type": "string" },
+        "type": { "type": "string" },
+        "num": { "type": "integer" },
+        "page": { "type": "integer" }
+      }
+    },
+    "knowledgeGraph": {
+      "type": "object",
+      "description": "Google Knowledge Graph entity data for the query.",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "website": { "type": "string", "format": "uri" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "description": { "type": "string" },
+        "descriptionSource": { "type": "string" },
+        "descriptionLink": { "type": "string", "format": "uri" },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "answerBox": {
+      "type": "object",
+      "description": "Featured snippet / answer box.",
+      "properties": {
+        "snippet": { "type": "string" },
+        "snippetHighlighted": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "title": { "type": "string" },
+        "link": { "type": "string", "format": "uri" },
+        "date": { "type": "string" }
+      }
+    },
+    "organic": {
+      "type": "array",
+      "description": "Organic web search results.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "link": { "type": "string", "format": "uri" },
+          "snippet": { "type": "string" },
+          "position": { "type": "integer" },
+          "date": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "sitelinks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "link": { "type": "string", "format": "uri" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "peopleAlsoAsk": {
+      "type": "array",
+      "description": "Related questions users also ask.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" },
+          "snippet": { "type": "string" },
+          "title": { "type": "string" },
+          "link": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "relatedSearches": {
+      "type": "array",
+      "description": "Related search queries.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" }
+        }
+      }
+    }
+  }
+}

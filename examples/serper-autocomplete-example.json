@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/autocomplete",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "how to build",
+      "gl": "us",
+      "hl": "en"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "suggestions": [
+        { "value": "how to build your own house" },
+        { "value": "how to build your own pc" },
+        { "value": "how to build your own website" },
+        { "value": "how to build your own sauna" },
+        { "value": "how to build your own greenhouse" },
+        { "value": "how to build your own gaming pc" },
+        { "value": "how to build your own house in florida" },
+        { "value": "how to build your own closet" },
+        { "value": "how to build your own workout routine" },
+        { "value": "how to build your own ai model" }
+      ]
+    }
+  }
+}

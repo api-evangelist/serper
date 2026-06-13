@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/scholar",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "attention is all you need",
+      "gl": "us",
+      "hl": "en"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "searchParameters": {
+        "q": "attention is all you need",
+        "gl": "us",
+        "hl": "en",
+        "type": "scholar"
+      },
+      "organic": [
+        {
+          "title": "Attention is all you need",
+          "link": "https://proceedings.neurips.cc/paper/7181-attention-is-all",
+          "publicationInfo": "A Vaswani, N Shazeer, N Parmar… - Advances in neural …, 2017 - proceedings.neurips.cc",
+          "snippet": "… to attend to all positions in the decoder up to and including that position.",
+          "year": 2017,
+          "citedBy": 119097,
+          "position": 1
+        },
+        {
+          "title": "Attention is all you need in speech separation",
+          "link": "https://ieeexplore.ieee.org/abstract/document/9413901/",
+          "publicationInfo": "C Subakan, M Ravanelli, S Cornell… - ICASSP 2021, 2021 - ieeexplore.ieee.org",
+          "snippet": "Transformers are emerging as a natural alternative to standard RNNs.",
+          "year": 2021,
+          "citedBy": 429,
+          "position": 2
+        }
+      ]
+    }
+  }
+}

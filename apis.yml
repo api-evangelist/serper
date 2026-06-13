@@ -47,7 +47,7 @@ apis:
       - type: Documentation
         url: https://serper.dev
       - type: OpenAPI
-        url: https://serper.dev
+        url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/openapi/serper-google-search-api-openapi.yml
     contact:
       - FN: Serper Support
         url: https://serper.dev

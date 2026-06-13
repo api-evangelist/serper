@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/serper/main/json-schema/serper-search-request.json",
+  "title": "Serper Search Request",
+  "description": "Request body schema for all Serper search endpoints",
+  "type": "object",
+  "required": ["q"],
+  "properties": {
+    "q": {
+      "type": "string",
+      "description": "The search query string.",
+      "examples": ["google search", "SpaceX launch", "Nike Air Max"]
+    },
+    "gl": {
+      "type": "string",
+      "description": "Country code for geolocation of results (ISO 3166-1 alpha-2).",
+      "default": "us",
+      "examples": ["us", "gb", "fr", "de", "jp"]
+    },
+    "hl": {
+      "type": "string",
+      "description": "Language code for results (ISO 639-1).",
+      "default": "en",
+      "examples": ["en", "fr", "de", "es", "ja"]
+    },
+    "num": {
+      "type": "integer",
+      "description": "Number of results to return.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 10
+    },
+    "page": {
+      "type": "integer",
+      "description": "Page number for pagination.",
+      "minimum": 1,
+      "default": 1
+    },
+    "tbs": {
+      "type": "string",
+      "description": "Time-based search filter. Values: 'qdr:h' (hour), 'qdr:d' (day), 'qdr:w' (week), 'qdr:m' (month), 'qdr:y' (year).",
+      "examples": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"]
+    },
+    "autocorrect": {
+      "type": "boolean",
+      "description": "Whether to enable autocorrect for the query.",
+      "default": true
+    },
+    "ll": {
+      "type": "string",
+      "description": "Latitude/longitude and zoom for maps/places searches. Format: @{lat},{lng},{zoom}z",
+      "examples": ["@40.7504178,-73.9824837,14z", "@37.7749,-122.4194,13z"]
+    }
+  }
+}

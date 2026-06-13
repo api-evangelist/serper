@@ -1,0 +1,195 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "serper": "https://serper.dev/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+
+    "SearchRequest": "serper:SearchRequest",
+    "SearchResponse": "serper:SearchResponse",
+    "ImageSearchResponse": "serper:ImageSearchResponse",
+    "NewsSearchResponse": "serper:NewsSearchResponse",
+    "MapsSearchResponse": "serper:MapsSearchResponse",
+    "PlacesSearchResponse": "serper:PlacesSearchResponse",
+    "VideoSearchResponse": "serper:VideoSearchResponse",
+    "ShoppingSearchResponse": "serper:ShoppingSearchResponse",
+    "ScholarSearchResponse": "serper:ScholarSearchResponse",
+    "PatentsSearchResponse": "serper:PatentsSearchResponse",
+    "AutocompleteResponse": "serper:AutocompleteResponse",
+
+    "q": {
+      "@id": "serper:query",
+      "@type": "xsd:string"
+    },
+    "gl": {
+      "@id": "serper:geolocation",
+      "@type": "xsd:string"
+    },
+    "hl": {
+      "@id": "serper:hostLanguage",
+      "@type": "xsd:string"
+    },
+    "num": {
+      "@id": "serper:numberOfResults",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "serper:pageNumber",
+      "@type": "xsd:integer"
+    },
+    "tbs": {
+      "@id": "serper:timeBasedSearch",
+      "@type": "xsd:string"
+    },
+    "ll": {
+      "@id": "serper:latitudeLongitude",
+      "@type": "xsd:string"
+    },
+    "autocorrect": {
+      "@id": "serper:autocorrect",
+      "@type": "xsd:boolean"
+    },
+
+    "searchParameters": "serper:searchParameters",
+    "organic": "serper:organic",
+    "knowledgeGraph": "serper:knowledgeGraph",
+    "answerBox": "serper:answerBox",
+    "peopleAlsoAsk": "serper:peopleAlsoAsk",
+    "relatedSearches": "serper:relatedSearches",
+    "images": "serper:images",
+    "news": "serper:news",
+    "places": "serper:places",
+    "videos": "serper:videos",
+    "shopping": "serper:shopping",
+    "suggestions": "serper:suggestions",
+
+    "title": "schema:name",
+    "link": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "snippet": "schema:description",
+    "position": {
+      "@id": "serper:position",
+      "@type": "xsd:integer"
+    },
+    "imageUrl": {
+      "@id": "schema:image",
+      "@type": "@id"
+    },
+    "thumbnailUrl": {
+      "@id": "schema:thumbnailUrl",
+      "@type": "@id"
+    },
+    "sitelinks": "serper:sitelinks",
+    "attributes": "serper:attributes",
+    "date": "schema:datePublished",
+
+    "website": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "description": "schema:description",
+    "descriptionSource": "serper:descriptionSource",
+    "descriptionLink": {
+      "@id": "serper:descriptionLink",
+      "@type": "@id"
+    },
+    "type": "schema:additionalType",
+
+    "imageWidth": {
+      "@id": "schema:width",
+      "@type": "xsd:integer"
+    },
+    "imageHeight": {
+      "@id": "schema:height",
+      "@type": "xsd:integer"
+    },
+    "thumbnailWidth": {
+      "@id": "serper:thumbnailWidth",
+      "@type": "xsd:integer"
+    },
+    "thumbnailHeight": {
+      "@id": "serper:thumbnailHeight",
+      "@type": "xsd:integer"
+    },
+    "source": "schema:provider",
+    "domain": "serper:domain",
+    "googleUrl": {
+      "@id": "serper:googleUrl",
+      "@type": "@id"
+    },
+
+    "address": "schema:address",
+    "latitude": {
+      "@id": "schema:latitude",
+      "@type": "xsd:double"
+    },
+    "longitude": {
+      "@id": "schema:longitude",
+      "@type": "xsd:double"
+    },
+    "rating": {
+      "@id": "schema:ratingValue",
+      "@type": "xsd:float"
+    },
+    "ratingCount": {
+      "@id": "schema:reviewCount",
+      "@type": "xsd:integer"
+    },
+    "types": "serper:businessTypes",
+    "phoneNumber": "schema:telephone",
+    "category": "schema:category",
+    "cid": "serper:googleCustomerId",
+
+    "duration": "schema:duration",
+    "channel": "serper:channel",
+
+    "price": "schema:price",
+    "delivery": "serper:deliveryInfo",
+    "offers": "serper:offers",
+    "productId": "serper:productId",
+
+    "publicationInfo": "serper:publicationInfo",
+    "year": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:integer"
+    },
+    "citedBy": {
+      "@id": "serper:citedBy",
+      "@type": "xsd:integer"
+    },
+
+    "priorityDate": {
+      "@id": "serper:priorityDate",
+      "@type": "xsd:date"
+    },
+    "filingDate": {
+      "@id": "serper:filingDate",
+      "@type": "xsd:date"
+    },
+    "grantDate": {
+      "@id": "serper:grantDate",
+      "@type": "xsd:date"
+    },
+    "publicationDate": {
+      "@id": "serper:publicationDate",
+      "@type": "xsd:date"
+    },
+    "inventor": "schema:inventor",
+    "assignee": "schema:assignee",
+    "publicationNumber": "serper:publicationNumber",
+    "language": "schema:inLanguage",
+    "pdfUrl": {
+      "@id": "serper:pdfUrl",
+      "@type": "@id"
+    },
+    "figures": "serper:figures",
+
+    "value": "schema:value",
+    "question": "schema:question",
+
+    "X-API-KEY": "serper:apiKey"
+  }
+}

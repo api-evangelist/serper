@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://google.serper.dev/shopping",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "q": "Nike Air Max",
+      "gl": "us",
+      "hl": "en"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "searchParameters": {
+        "q": "Nike Air Max",
+        "gl": "us",
+        "hl": "en",
+        "type": "shopping"
+      },
+      "shopping": [
+        {
+          "title": "Nike Air Max 97 GS 'White Metallic Silver'",
+          "source": "Nike",
+          "link": "https://www.nike.com/t/air-max-97-big-kids-shoes-example",
+          "price": "$104.97",
+          "delivery": "$8.00 shipping",
+          "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:example",
+          "rating": 4.5,
+          "ratingCount": 1,
+          "offers": "10+",
+          "productId": "4195027484078128635",
+          "position": 1
+        },
+        {
+          "title": "Nike Men's Air Max SC Shoes, Size 12.5, White/Black/White",
+          "source": "DICK'S Sporting Goods",
+          "link": "https://www.dickssportinggoods.com/p/nike-mens-air-max-sc-example",
+          "price": "$89.99",
+          "delivery": "Free shipping",
+          "imageUrl": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:example",
+          "rating": 4.5,
+          "ratingCount": 3,
+          "offers": "4",
+          "productId": "8642677784755557454",
+          "position": 2
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "provider": "serper",
+  "blogs": [],
+  "lastFetched": null,
+  "sources": [
+    {
+      "type": "Website",
+      "url": "https://serper.dev"
+    }
+  ]
+}
