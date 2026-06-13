@@ -1,0 +1,78 @@
+specificationVersion: "0.1"
+id: serper-rate-limits
+name: Serper Rate Limits
+description: >-
+  Serper enforces rate limits at the queries-per-second (QPS) level. Limits
+  scale with plan tier, ranging from approximately 50 QPS on the free trial up
+  to 300 QPS on the Ultimate plan. Higher concurrency is available for Ultimate
+  customers upon request. Credits are deducted only for successful query
+  responses. When the credit balance reaches zero, new queries are rejected.
+  Requesting 100 results per page (non-default) doubles credit consumption
+  relative to the default 10-result page size.
+url: https://serper.dev
+
+rateLimits:
+  - name: Free Trial QPS Limit
+    description: Maximum concurrent query rate for the free trial tier.
+    plan: Free Trial
+    limit: 50
+    period: second
+    unit: requests
+    notes: >-
+      2,500 total credits. No credit card required.
+
+  - name: Starter QPS Limit
+    description: Maximum query rate for the Starter credit package.
+    plan: Starter
+    limit: 100
+    period: second
+    unit: requests
+    notes: >-
+      50,000 credits at $1.00/1K. Credits valid 6 months.
+
+  - name: Standard QPS Limit
+    description: Maximum query rate for the Standard credit package.
+    plan: Standard
+    limit: 150
+    period: second
+    unit: requests
+    notes: >-
+      500,000 credits at $0.75/1K. Priority support included.
+
+  - name: Scale QPS Limit
+    description: Maximum query rate for the Scale credit package.
+    plan: Scale
+    limit: 200
+    period: second
+    unit: requests
+    notes: >-
+      2,500,000 credits at $0.50/1K.
+
+  - name: Ultimate QPS Limit
+    description: >-
+      Default maximum query rate for the Ultimate credit package. Up to
+      approximately 18,000 searches per minute (300 QPS). Higher limits
+      available on request.
+    plan: Ultimate
+    limit: 300
+    period: second
+    unit: requests
+    notes: >-
+      12,500,000 credits at $0.30/1K. Dedicated infrastructure and SLA.
+      Custom concurrency available upon request.
+
+  - name: Extended Results Credit Multiplier
+    description: >-
+      Requesting 100 results per page instead of the default 10 doubles the
+      credit consumption per query across all plans.
+    plan: All
+    multiplier: 2
+    trigger: num=100 parameter
+    notes: >-
+      Default page size is 10 results (1 credit). Setting num=100 costs
+      2 credits per query.
+
+globalNotes: >-
+  Credits are deducted per successful response. Failed or errored requests do
+  not consume credits. Response times are typically 1-2 seconds; up to 4 seconds
+  if a server-side retry is needed.

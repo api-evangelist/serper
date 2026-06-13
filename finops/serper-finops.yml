@@ -1,0 +1,127 @@
+specificationVersion: "1.0"
+id: serper-finops
+name: Serper FinOps Framework
+description: >-
+  FinOps analysis for Serper's Google Search API covering cost allocation,
+  optimization, and forecasting aligned to the FinOps Foundation FOCUS
+  specification. Serper's credit-based, usage-driven model makes it
+  straightforward to attribute costs to specific teams or workloads and
+  to forecast spend from query volume projections.
+url: https://serper.dev
+
+framework:
+  standard: FinOps FOCUS
+  version: "1.0"
+
+costAllocation:
+  model: credit-based
+  billingUnit: credit
+  description: >-
+    Each successful API query deducts one credit from the account balance.
+    Requesting 100 results per page deducts two credits. Credits are purchased
+    in advance in fixed packages; unused credits expire after 6 months.
+  taggingRecommendations:
+    - Use separate API keys per team, product, or environment to isolate consumption.
+    - Label API keys with cost-center or project metadata for chargebacks.
+    - Monitor credit consumption via the Serper dashboard or API usage endpoint.
+
+pricingDimensions:
+  - dimension: Query Volume
+    description: Primary cost driver; all charges scale linearly with successful query count.
+    unitCost:
+      freeTrial: 0.00
+      starter: 1.00
+      standard: 0.75
+      scale: 0.50
+      ultimate: 0.30
+    unit: per 1,000 queries
+    currency: USD
+
+  - dimension: Results Per Page
+    description: >-
+      Requesting 100 results (num=100) doubles the per-query credit cost
+      compared to the default 10-result page.
+    multiplier: 2.0
+    defaultResultsPerPage: 10
+    maxResultsPerPage: 100
+
+  - dimension: Credit Package Size
+    description: Larger credit bundles yield lower per-unit costs.
+    packages:
+      - credits: 2500
+        price: 0.00
+        type: free-trial
+      - credits: 50000
+        price: 50.00
+        costPer1k: 1.00
+      - credits: 500000
+        price: 375.00
+        costPer1k: 0.75
+      - credits: 2500000
+        price: 1250.00
+        costPer1k: 0.50
+      - credits: 12500000
+        price: 3750.00
+        costPer1k: 0.30
+
+optimization:
+  recommendations:
+    - name: Right-size credit packages
+      description: >-
+        Purchase credit packages aligned to 6-month projected query volume to
+        avoid over-provisioning (wasted expiring credits) or under-provisioning
+        (higher per-unit cost from multiple Starter purchases).
+      savingsPotential: high
+
+    - name: Cache search results
+      description: >-
+        Implement a short-lived cache (e.g., 1-5 minutes for news; 24 hours for
+        evergreen queries) to eliminate duplicate credits consumed on identical
+        queries fired within a burst window.
+      savingsPotential: high
+
+    - name: Minimize result page size
+      description: >-
+        Use the default 10-result page (num=10) unless larger result sets are
+        required. Requesting num=100 doubles credit consumption for each query.
+      savingsPotential: medium
+
+    - name: Consolidate to higher-volume tiers
+      description: >-
+        When total monthly consumption consistently exceeds 50,000 queries,
+        upgrade to the next credit tier to reduce the effective cost per query.
+      savingsPotential: medium
+
+    - name: Monitor and alert on credit burn rate
+      description: >-
+        Set alerts when remaining credits fall below a threshold (e.g., 10% of
+        purchased bundle) to avoid service interruption and plan re-purchases.
+      savingsPotential: low
+
+forecasting:
+  approach: volume-based
+  inputs:
+    - averageQueriesPerDay
+    - resultsPerPageRatio
+    - planTier
+  formula: >-
+    monthly_cost = (averageQueriesPerDay * 30 * costPer1kQueries / 1000)
+    * resultsMultiplier
+  notes: >-
+    Credits are valid for 6 months. Annual forecasting should account for
+    query growth trends and seasonal search volume peaks. Plan re-purchase
+    timing should be aligned to credit expiry windows.
+
+reporting:
+  keyMetrics:
+    - name: Cost Per Query
+      formula: "plan_price / credits_purchased"
+      unit: USD
+    - name: Credit Utilization Rate
+      formula: "credits_used / credits_purchased"
+      unit: percentage
+    - name: Effective Monthly Spend
+      formula: "queries_per_month / 1000 * cost_per_1k"
+      unit: USD
+    - name: Credits Remaining
+      description: Monitor via Serper dashboard to prevent service interruption.

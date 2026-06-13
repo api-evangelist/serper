@@ -1,0 +1,75 @@
+aid: serper
+name: Serper
+description: >-
+  Serper is the world's fastest and most affordable Google Search API, delivering
+  real-time SERP data in 1-2 seconds via a simple REST interface. It supports web
+  search, images, news, maps, places, videos, shopping, scholar, patents, and
+  autocomplete — all returned as structured JSON. Widely used in AI agents, LLM
+  pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free
+  queries and volume pricing down to $0.30 per 1,000 requests.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/apis.yml
+created: "2026-06-13"
+modified: "2026-06-13"
+specificationVersion: "0.19"
+tags:
+  - Search
+  - SERP
+  - Google Search
+  - AI
+  - LLM
+  - SEO
+  - Images
+  - News
+  - Maps
+  - Shopping
+
+apis:
+  - aid: serper:google-search-api
+    name: Serper Google Search API
+    description: >-
+      RESTful API providing real-time Google Search Engine Results Page (SERP) data
+      in structured JSON format. Supports web search, image search, news, maps,
+      places, videos, shopping, scholar, patents, and autocomplete via a single
+      POST endpoint. Authentication uses an X-API-KEY header. Designed for
+      high-throughput AI and LLM applications with up to 300 queries per second.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://serper.dev
+    baseURL: https://google.serper.dev
+    tags:
+      - Google Search
+      - SERP
+      - Web Search
+      - AI
+      - LLM
+    properties:
+      - type: Documentation
+        url: https://serper.dev
+      - type: OpenAPI
+        url: https://serper.dev
+    contact:
+      - FN: Serper Support
+        url: https://serper.dev
+
+common:
+  - type: Website
+    url: https://serper.dev
+  - type: Documentation
+    url: https://serper.dev
+  - type: GitHubOrg
+    url: https://github.com/Serper-API
+  - type: X
+    url: https://x.com/serperapi
+  - type: Pricing
+    url: https://serper.dev
+  - type: Plans
+    url: plans/serper-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/serper-rate-limits.yml
+  - type: FinOps
+    url: finops/serper-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
