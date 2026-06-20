@@ -8,7 +8,7 @@ description: >-
   pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free
   queries and volume pricing down to $0.30 per 1,000 requests.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/apis.yml
 created: "2026-06-13"
 modified: "2026-06-13"
@@ -34,7 +34,7 @@ apis:
       places, videos, shopping, scholar, patents, and autocomplete via a single
       POST endpoint. Authentication uses an X-API-KEY header. Designed for
       high-throughput AI and LLM applications with up to 300 queries per second.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://serper.dev
     baseURL: https://google.serper.dev
     tags:
