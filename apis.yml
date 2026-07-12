@@ -53,6 +53,10 @@ apis:
         url: https://serper.dev
 
 common:
+  - type: DomainSecurity
+    url: security/serper-domain-security.yml
+  - type: Authentication
+    url: authentication/serper-authentication.yml
   - type: Website
     url: https://serper.dev
   - type: Documentation
