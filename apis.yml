@@ -53,6 +53,8 @@ apis:
         url: https://serper.dev
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/serper-agentic-access.yml
   - type: DomainSecurity
     url: security/serper-domain-security.yml
   - type: Authentication
