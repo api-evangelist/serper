@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: Serper Google Search Autocomplete News API
+  description: RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+  termsOfService: https://serper.dev/terms-of-service
+  license:
+    name: Commercial
+    url: https://serper.dev
+servers:
+- url: https://google.serper.dev
+  description: Serper API server
+security:
+- apiKeyHeader: []
+tags:
+- name: News
+  description: News search results
+paths:
+  /news:
+    post:
+      operationId: newsSearch
+      summary: News Search
+      description: Perform a Google News search and receive structured news article results including titles, links, snippets, dates, sources, and images.
+      tags:
+      - News
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: technology news
+              gl: us
+              hl: en
+      responses:
+        '200':
+          description: Successful news search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
+    NewsResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: News article title.
+        link:
+          type: string
+          format: uri
+          description: URL to the news article.
+        snippet:
+          type: string
+          description: Article excerpt or summary.
+        date:
+          type: string
+          description: Publication date or relative time (e.g., "2 weeks ago").
+        source:
+          type: string
+          description: News source name.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the article thumbnail image.
+        position:
+          type: integer
+          description: Position in news results.
+    NewsSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        news:
+          type: array
+          description: News search results.
+          items:
+            $ref: '#/components/schemas/NewsResult'
+    SearchRequest:
+      type: object
+      required:
+      - q
+      properties:
+        q:
+          type: string
+          description: The search query string.
+          example: google search
+        gl:
+          type: string
+          description: Country code for geolocation of results (ISO 3166-1 alpha-2).
+          example: us
+          default: us
+        hl:
+          type: string
+          description: Language code for results (ISO 639-1).
+          example: en
+          default: en
+        num:
+          type: integer
+          description: Number of results to return (1-100).
+          minimum: 1
+          maximum: 100
+          default: 10
+          example: 10
+        page:
+          type: integer
+          description: Page number for pagination.
+          minimum: 1
+          default: 1
+          example: 1
+        tbs:
+          type: string
+          description: Time-based search filter. Use values like 'qdr:h' (past hour), 'qdr:d' (past day), 'qdr:w' (past week), 'qdr:m' (past month), 'qdr:y' (past year).
+          example: qdr:d
+        autocorrect:
+          type: boolean
+          description: Whether to enable autocorrect for the query.
+          default: true
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-key

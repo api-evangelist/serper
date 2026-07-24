@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Serper Google Search Autocomplete API
+  description: RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+  termsOfService: https://serper.dev/terms-of-service
+  license:
+    name: Commercial
+    url: https://serper.dev
+servers:
+- url: https://google.serper.dev
+  description: Serper API server
+security:
+- apiKeyHeader: []
+tags:
+- name: Autocomplete
+  description: Search autocomplete suggestions
+paths:
+  /autocomplete:
+    post:
+      operationId: autocomplete
+      summary: Autocomplete
+      description: Retrieve Google search autocomplete suggestions for a given query string. Returns an ordered list of suggested search queries.
+      tags:
+      - Autocomplete
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutocompleteRequest'
+            example:
+              q: how to build
+              gl: us
+              hl: en
+      responses:
+        '200':
+          description: Successful autocomplete response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+              example:
+                suggestions:
+                - value: how to build your own house
+                - value: how to build your own pc
+                - value: how to build your own website
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    AutocompleteSuggestion:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Autocomplete suggestion text.
+    AutocompleteResponse:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          description: List of autocomplete suggestions.
+          items:
+            $ref: '#/components/schemas/AutocompleteSuggestion'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+    AutocompleteRequest:
+      type: object
+      required:
+      - q
+      properties:
+        q:
+          type: string
+          description: The partial search query for autocomplete suggestions.
+          example: how to build
+        gl:
+          type: string
+          description: Country code for geolocation (ISO 3166-1 alpha-2).
+          example: us
+          default: us
+        hl:
+          type: string
+          description: Language code for results (ISO 639-1).
+          example: en
+          default: en
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-key

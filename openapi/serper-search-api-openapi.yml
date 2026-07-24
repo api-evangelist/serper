@@ -1,0 +1,318 @@
+openapi: 3.0.3
+info:
+  title: Serper Google Autocomplete Search API
+  description: RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+  termsOfService: https://serper.dev/terms-of-service
+  license:
+    name: Commercial
+    url: https://serper.dev
+servers:
+- url: https://google.serper.dev
+  description: Serper API server
+security:
+- apiKeyHeader: []
+tags:
+- name: Search
+  description: Web search results
+paths:
+  /search:
+    post:
+      operationId: webSearch
+      summary: Web Search
+      description: Perform a Google web search and receive structured SERP data including organic results, knowledge graph, answer box, people also ask, and related searches.
+      tags:
+      - Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: google search
+              gl: us
+              hl: en
+              num: 10
+      responses:
+        '200':
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                searchParameters:
+                  q: google search
+                  gl: us
+                  hl: en
+                  type: search
+                  num: 10
+                knowledgeGraph:
+                  title: Google Search
+                  type: Website
+                  website: https://google.com/
+                  imageUrl: https://encrypted-tbn0.gstatic.com/images?q=tbn:example
+                  description: Google Search is a search engine provided and operated by Google.
+                  descriptionSource: Wikipedia
+                  descriptionLink: https://en.wikipedia.org/wiki/Google_Search
+                  attributes:
+                    Written in: Python, C, and C++
+                    Category: Search engine
+                    Date launched: '1998'
+                organic:
+                - title: Google
+                  link: https://www.google.com/
+                  snippet: Search the world's information...
+                  position: 1
+                  sitelinks:
+                  - title: Images
+                    link: https://images.google.com/
+                peopleAlsoAsk:
+                - question: How does Google Search work?
+                  snippet: Google Search uses automated software...
+                  title: How Search works
+                  link: https://www.google.com/search/howsearchworks/
+                relatedSearches:
+                - query: google search engine
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    RelatedSearch:
+      type: object
+      properties:
+        query:
+          type: string
+          description: A related search query.
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
+    SearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        knowledgeGraph:
+          $ref: '#/components/schemas/KnowledgeGraph'
+        answerBox:
+          $ref: '#/components/schemas/AnswerBox'
+        organic:
+          type: array
+          description: Organic search results.
+          items:
+            $ref: '#/components/schemas/OrganicResult'
+        peopleAlsoAsk:
+          type: array
+          description: Related questions people also ask.
+          items:
+            $ref: '#/components/schemas/PeopleAlsoAsk'
+        relatedSearches:
+          type: array
+          description: Related search queries.
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+    AnswerBox:
+      type: object
+      properties:
+        snippet:
+          type: string
+          description: Direct answer text.
+        snippetHighlighted:
+          type: array
+          items:
+            type: string
+          description: Highlighted portions of the snippet.
+        title:
+          type: string
+          description: Title of the answer box source.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
+        date:
+          type: string
+          description: Date of the content.
+    PeopleAlsoAsk:
+      type: object
+      properties:
+        question:
+          type: string
+          description: The related question.
+        snippet:
+          type: string
+          description: Brief answer to the question.
+        title:
+          type: string
+          description: Title of the source page.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
+    KnowledgeGraph:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the knowledge graph entity.
+        type:
+          type: string
+          description: Type/category of the entity.
+        website:
+          type: string
+          format: uri
+          description: Official website URL.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the knowledge graph image.
+        description:
+          type: string
+          description: Description of the entity.
+        descriptionSource:
+          type: string
+          description: Source of the description (e.g., Wikipedia).
+        descriptionLink:
+          type: string
+          format: uri
+          description: Link to the description source.
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Key-value attributes about the entity.
+    SearchRequest:
+      type: object
+      required:
+      - q
+      properties:
+        q:
+          type: string
+          description: The search query string.
+          example: google search
+        gl:
+          type: string
+          description: Country code for geolocation of results (ISO 3166-1 alpha-2).
+          example: us
+          default: us
+        hl:
+          type: string
+          description: Language code for results (ISO 639-1).
+          example: en
+          default: en
+        num:
+          type: integer
+          description: Number of results to return (1-100).
+          minimum: 1
+          maximum: 100
+          default: 10
+          example: 10
+        page:
+          type: integer
+          description: Page number for pagination.
+          minimum: 1
+          default: 1
+          example: 1
+        tbs:
+          type: string
+          description: Time-based search filter. Use values like 'qdr:h' (past hour), 'qdr:d' (past day), 'qdr:w' (past week), 'qdr:m' (past month), 'qdr:y' (past year).
+          example: qdr:d
+        autocorrect:
+          type: boolean
+          description: Whether to enable autocorrect for the query.
+          default: true
+    Sitelink:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the sitelink.
+        link:
+          type: string
+          format: uri
+          description: URL of the sitelink.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+    OrganicResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The page title.
+        link:
+          type: string
+          format: uri
+          description: URL of the result.
+        snippet:
+          type: string
+          description: Brief description or excerpt of the page.
+        position:
+          type: integer
+          description: Rank position in search results.
+        sitelinks:
+          type: array
+          description: Sub-links shown beneath the main result.
+          items:
+            $ref: '#/components/schemas/Sitelink'
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional metadata attributes shown in the result.
+        date:
+          type: string
+          description: Publication date if available.
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-key

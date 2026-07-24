@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: Serper Google Search Autocomplete Patents API
+  description: RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+  termsOfService: https://serper.dev/terms-of-service
+  license:
+    name: Commercial
+    url: https://serper.dev
+servers:
+- url: https://google.serper.dev
+  description: Serper API server
+security:
+- apiKeyHeader: []
+tags:
+- name: Patents
+  description: Patent search results
+paths:
+  /patents:
+    post:
+      operationId: patentsSearch
+      summary: Patents Search
+      description: Perform a Google Patents search returning patent records with titles, snippets, priority dates, filing dates, grant dates, inventors, assignees, publication numbers, and figure images.
+      tags:
+      - Patents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: machine learning neural network
+              gl: us
+              hl: en
+      responses:
+        '200':
+          description: Successful patents search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatentsSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
+    SearchRequest:
+      type: object
+      required:
+      - q
+      properties:
+        q:
+          type: string
+          description: The search query string.
+          example: google search
+        gl:
+          type: string
+          description: Country code for geolocation of results (ISO 3166-1 alpha-2).
+          example: us
+          default: us
+        hl:
+          type: string
+          description: Language code for results (ISO 639-1).
+          example: en
+          default: en
+        num:
+          type: integer
+          description: Number of results to return (1-100).
+          minimum: 1
+          maximum: 100
+          default: 10
+          example: 10
+        page:
+          type: integer
+          description: Page number for pagination.
+          minimum: 1
+          default: 1
+          example: 1
+        tbs:
+          type: string
+          description: Time-based search filter. Use values like 'qdr:h' (past hour), 'qdr:d' (past day), 'qdr:w' (past week), 'qdr:m' (past month), 'qdr:y' (past year).
+          example: qdr:d
+        autocorrect:
+          type: boolean
+          description: Whether to enable autocorrect for the query.
+          default: true
+    PatentsSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        organic:
+          type: array
+          description: Patent search results.
+          items:
+            $ref: '#/components/schemas/PatentResult'
+    PatentFigure:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the full-size patent figure image.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: URL to the thumbnail patent figure image.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+    PatentResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Patent title.
+        snippet:
+          type: string
+          description: Abstract or description excerpt.
+        link:
+          type: string
+          format: uri
+          description: URL to the patent on Google Patents.
+        priorityDate:
+          type: string
+          format: date
+          description: Priority date of the patent (YYYY-MM-DD).
+        filingDate:
+          type: string
+          format: date
+          description: Filing date of the patent (YYYY-MM-DD).
+        grantDate:
+          type: string
+          format: date
+          description: Grant date of the patent (YYYY-MM-DD).
+        publicationDate:
+          type: string
+          format: date
+          description: Publication date of the patent (YYYY-MM-DD).
+        inventor:
+          type: string
+          description: Inventor name(s).
+        assignee:
+          type: string
+          description: Patent assignee (usually a company).
+        publicationNumber:
+          type: string
+          description: Patent publication number (e.g., "US10678858B2").
+        language:
+          type: string
+          description: Language of the patent document.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: Thumbnail URL of the patent diagram.
+        pdfUrl:
+          type: string
+          format: uri
+          description: URL to the patent PDF.
+        figures:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatentFigure'
+          description: Patent figures and diagrams.
+        position:
+          type: integer
+          description: Position in patent results.
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-key
