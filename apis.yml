@@ -8,7 +8,20 @@ description: >-
   pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free
   queries and volume pricing down to $0.30 per 1,000 requests.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: true
+  try_now: true
+  public: true
+  label: Freemium (free trial) · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/serper.png
 url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/apis.yml
 created: "2026-06-13"
 modified: "2026-06-13"
@@ -26,32 +39,126 @@ tags:
   - Shopping
 
 apis:
-  - aid: serper:google-search-api
-    name: Serper Google Search API
-    description: >-
-      RESTful API providing real-time Google Search Engine Results Page (SERP) data
-      in structured JSON format. Supports web search, image search, news, maps,
-      places, videos, shopping, scholar, patents, and autocomplete via a single
-      POST endpoint. Authentication uses an X-API-KEY header. Designed for
-      high-throughput AI and LLM applications with up to 300 queries per second.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://serper.dev
-    baseURL: https://google.serper.dev
-    tags:
-      - Google Search
-      - SERP
-      - Web Search
-      - AI
-      - LLM
-    properties:
-      - type: Documentation
-        url: https://serper.dev
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/openapi/serper-google-search-api-openapi.yml
-    contact:
-      - FN: Serper Support
-        url: https://serper.dev
-
+- aid: serper:serper-autocomplete-api
+  name: Serper Autocomplete API
+  description: Search autocomplete suggestions
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Autocomplete
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-autocomplete-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-images-api
+  name: Serper Images API
+  description: Image search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-images-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-maps-api
+  name: Serper Maps API
+  description: Maps and location search
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Maps
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-maps-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-news-api
+  name: Serper News API
+  description: News search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - News
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-news-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-patents-api
+  name: Serper Patents API
+  description: Patent search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Patents
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-patents-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-places-api
+  name: Serper Places API
+  description: Local business and place search
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Places
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-places-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-scholar-api
+  name: Serper Scholar API
+  description: Academic publication search
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Scholar
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-scholar-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-search-api
+  name: Serper Search API
+  description: Web search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-search-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-shopping-api
+  name: Serper Shopping API
+  description: Product and shopping search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Shopping
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-shopping-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
+- aid: serper:serper-videos-api
+  name: Serper Videos API
+  description: Video search results
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
+  tags:
+  - Videos
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-videos-api-openapi.yml
+  - type: Documentation
+    url: https://serper.dev
 common:
   - type: AgenticAccess
     url: agentic-access/serper-agentic-access.yml
