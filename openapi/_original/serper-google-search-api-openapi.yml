@@ -1,0 +1,1101 @@
+openapi: 3.0.3
+info:
+  title: Serper Google Search API
+  description: >-
+    RESTful API providing real-time Google Search Engine Results Page (SERP) data
+    in structured JSON format. Supports web search, image search, news, maps,
+    places, videos, shopping, scholar, patents, and autocomplete via POST endpoints.
+    Authentication uses an X-API-KEY header. Designed for high-throughput AI and
+    LLM applications with up to 300 queries per second.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+  termsOfService: https://serper.dev/terms-of-service
+  license:
+    name: Commercial
+    url: https://serper.dev
+
+servers:
+  - url: https://google.serper.dev
+    description: Serper API server
+
+security:
+  - apiKeyHeader: []
+
+tags:
+  - name: Search
+    description: Web search results
+  - name: Images
+    description: Image search results
+  - name: News
+    description: News search results
+  - name: Maps
+    description: Maps and location search
+  - name: Places
+    description: Local business and place search
+  - name: Videos
+    description: Video search results
+  - name: Shopping
+    description: Product and shopping search results
+  - name: Scholar
+    description: Academic publication search
+  - name: Patents
+    description: Patent search results
+  - name: Autocomplete
+    description: Search autocomplete suggestions
+
+paths:
+  /search:
+    post:
+      operationId: webSearch
+      summary: Web Search
+      description: >-
+        Perform a Google web search and receive structured SERP data including
+        organic results, knowledge graph, answer box, people also ask, and
+        related searches.
+      tags:
+        - Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "google search"
+              gl: "us"
+              hl: "en"
+              num: 10
+      responses:
+        '200':
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                searchParameters:
+                  q: "google search"
+                  gl: "us"
+                  hl: "en"
+                  type: "search"
+                  num: 10
+                knowledgeGraph:
+                  title: "Google Search"
+                  type: "Website"
+                  website: "https://google.com/"
+                  imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:example"
+                  description: "Google Search is a search engine provided and operated by Google."
+                  descriptionSource: "Wikipedia"
+                  descriptionLink: "https://en.wikipedia.org/wiki/Google_Search"
+                  attributes:
+                    "Written in": "Python, C, and C++"
+                    "Category": "Search engine"
+                    "Date launched": "1998"
+                organic:
+                  - title: "Google"
+                    link: "https://www.google.com/"
+                    snippet: "Search the world's information..."
+                    position: 1
+                    sitelinks:
+                      - title: "Images"
+                        link: "https://images.google.com/"
+                peopleAlsoAsk:
+                  - question: "How does Google Search work?"
+                    snippet: "Google Search uses automated software..."
+                    title: "How Search works"
+                    link: "https://www.google.com/search/howsearchworks/"
+                relatedSearches:
+                  - query: "google search engine"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /images:
+    post:
+      operationId: imageSearch
+      summary: Image Search
+      description: >-
+        Perform a Google Image search and receive structured results including
+        image URLs, dimensions, thumbnails, source domains, and links.
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "lion"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful image search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /news:
+    post:
+      operationId: newsSearch
+      summary: News Search
+      description: >-
+        Perform a Google News search and receive structured news article results
+        including titles, links, snippets, dates, sources, and images.
+      tags:
+        - News
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "technology news"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful news search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /maps:
+    post:
+      operationId: mapsSearch
+      summary: Maps Search
+      description: >-
+        Perform a Google Maps search returning local business and place data
+        with coordinates, ratings, addresses, and contact information.
+      tags:
+        - Maps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MapsRequest'
+            example:
+              q: "coffee shops"
+              ll: "@40.7504178,-73.9824837,14z"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful maps search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MapsSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /places:
+    post:
+      operationId: placesSearch
+      summary: Places Search
+      description: >-
+        Perform a Google Places search returning detailed local business
+        information including addresses, ratings, categories, phone numbers,
+        and websites.
+      tags:
+        - Places
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MapsRequest'
+            example:
+              q: "restaurants near me"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful places search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacesSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /videos:
+    post:
+      operationId: videoSearch
+      summary: Video Search
+      description: >-
+        Perform a Google Video search returning structured video results with
+        titles, links, thumbnails, durations, channels, and sources.
+      tags:
+        - Videos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "SpaceX launch"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful video search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /shopping:
+    post:
+      operationId: shoppingSearch
+      summary: Shopping Search
+      description: >-
+        Perform a Google Shopping search returning product listings with titles,
+        prices, sources, delivery info, ratings, images, and product IDs.
+      tags:
+        - Shopping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "Nike Air Max"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful shopping search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /scholar:
+    post:
+      operationId: scholarSearch
+      summary: Scholar Search
+      description: >-
+        Perform a Google Scholar search returning academic publication results
+        with titles, links, publication info, snippets, years, and citation counts.
+      tags:
+        - Scholar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "attention is all you need"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful scholar search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScholarSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /patents:
+    post:
+      operationId: patentsSearch
+      summary: Patents Search
+      description: >-
+        Perform a Google Patents search returning patent records with titles,
+        snippets, priority dates, filing dates, grant dates, inventors, assignees,
+        publication numbers, and figure images.
+      tags:
+        - Patents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              q: "machine learning neural network"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful patents search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatentsSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /autocomplete:
+    post:
+      operationId: autocomplete
+      summary: Autocomplete
+      description: >-
+        Retrieve Google search autocomplete suggestions for a given query string.
+        Returns an ordered list of suggested search queries.
+      tags:
+        - Autocomplete
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutocompleteRequest'
+            example:
+              q: "how to build"
+              gl: "us"
+              hl: "en"
+      responses:
+        '200':
+          description: Successful autocomplete response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+              example:
+                suggestions:
+                  - value: "how to build your own house"
+                  - value: "how to build your own pc"
+                  - value: "how to build your own website"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-key
+
+  schemas:
+    SearchRequest:
+      type: object
+      required:
+        - q
+      properties:
+        q:
+          type: string
+          description: The search query string.
+          example: "google search"
+        gl:
+          type: string
+          description: >-
+            Country code for geolocation of results (ISO 3166-1 alpha-2).
+          example: "us"
+          default: "us"
+        hl:
+          type: string
+          description: >-
+            Language code for results (ISO 639-1).
+          example: "en"
+          default: "en"
+        num:
+          type: integer
+          description: Number of results to return (1-100).
+          minimum: 1
+          maximum: 100
+          default: 10
+          example: 10
+        page:
+          type: integer
+          description: Page number for pagination.
+          minimum: 1
+          default: 1
+          example: 1
+        tbs:
+          type: string
+          description: >-
+            Time-based search filter. Use values like 'qdr:h' (past hour),
+            'qdr:d' (past day), 'qdr:w' (past week), 'qdr:m' (past month),
+            'qdr:y' (past year).
+          example: "qdr:d"
+        autocorrect:
+          type: boolean
+          description: Whether to enable autocorrect for the query.
+          default: true
+
+    MapsRequest:
+      allOf:
+        - $ref: '#/components/schemas/SearchRequest'
+        - type: object
+          properties:
+            ll:
+              type: string
+              description: >-
+                Latitude/longitude coordinates and zoom level for maps search.
+                Format: @{lat},{lng},{zoom}z
+              example: "@40.7504178,-73.9824837,14z"
+
+    AutocompleteRequest:
+      type: object
+      required:
+        - q
+      properties:
+        q:
+          type: string
+          description: The partial search query for autocomplete suggestions.
+          example: "how to build"
+        gl:
+          type: string
+          description: Country code for geolocation (ISO 3166-1 alpha-2).
+          example: "us"
+          default: "us"
+        hl:
+          type: string
+          description: Language code for results (ISO 639-1).
+          example: "en"
+          default: "en"
+
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
+
+    OrganicResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The page title.
+        link:
+          type: string
+          format: uri
+          description: URL of the result.
+        snippet:
+          type: string
+          description: Brief description or excerpt of the page.
+        position:
+          type: integer
+          description: Rank position in search results.
+        sitelinks:
+          type: array
+          description: Sub-links shown beneath the main result.
+          items:
+            $ref: '#/components/schemas/Sitelink'
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional metadata attributes shown in the result.
+        date:
+          type: string
+          description: Publication date if available.
+
+    Sitelink:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the sitelink.
+        link:
+          type: string
+          format: uri
+          description: URL of the sitelink.
+
+    KnowledgeGraph:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the knowledge graph entity.
+        type:
+          type: string
+          description: Type/category of the entity.
+        website:
+          type: string
+          format: uri
+          description: Official website URL.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the knowledge graph image.
+        description:
+          type: string
+          description: Description of the entity.
+        descriptionSource:
+          type: string
+          description: Source of the description (e.g., Wikipedia).
+        descriptionLink:
+          type: string
+          format: uri
+          description: Link to the description source.
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Key-value attributes about the entity.
+
+    AnswerBox:
+      type: object
+      properties:
+        snippet:
+          type: string
+          description: Direct answer text.
+        snippetHighlighted:
+          type: array
+          items:
+            type: string
+          description: Highlighted portions of the snippet.
+        title:
+          type: string
+          description: Title of the answer box source.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
+        date:
+          type: string
+          description: Date of the content.
+
+    PeopleAlsoAsk:
+      type: object
+      properties:
+        question:
+          type: string
+          description: The related question.
+        snippet:
+          type: string
+          description: Brief answer to the question.
+        title:
+          type: string
+          description: Title of the source page.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
+
+    RelatedSearch:
+      type: object
+      properties:
+        query:
+          type: string
+          description: A related search query.
+
+    SearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        knowledgeGraph:
+          $ref: '#/components/schemas/KnowledgeGraph'
+        answerBox:
+          $ref: '#/components/schemas/AnswerBox'
+        organic:
+          type: array
+          description: Organic search results.
+          items:
+            $ref: '#/components/schemas/OrganicResult'
+        peopleAlsoAsk:
+          type: array
+          description: Related questions people also ask.
+          items:
+            $ref: '#/components/schemas/PeopleAlsoAsk'
+        relatedSearches:
+          type: array
+          description: Related search queries.
+          items:
+            $ref: '#/components/schemas/RelatedSearch'
+
+    ImageResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Image page title.
+        imageUrl:
+          type: string
+          format: uri
+          description: Direct URL to the full-size image.
+        imageWidth:
+          type: integer
+          description: Width of the image in pixels.
+        imageHeight:
+          type: integer
+          description: Height of the image in pixels.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: URL to the thumbnail image.
+        thumbnailWidth:
+          type: integer
+          description: Width of the thumbnail in pixels.
+        thumbnailHeight:
+          type: integer
+          description: Height of the thumbnail in pixels.
+        source:
+          type: string
+          description: Source website name.
+        domain:
+          type: string
+          description: Domain of the source website.
+        link:
+          type: string
+          format: uri
+          description: URL of the page containing the image.
+        googleUrl:
+          type: string
+          format: uri
+          description: Google image result URL.
+        position:
+          type: integer
+          description: Position in image results.
+
+    ImageSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        images:
+          type: array
+          description: Image search results.
+          items:
+            $ref: '#/components/schemas/ImageResult'
+
+    NewsResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: News article title.
+        link:
+          type: string
+          format: uri
+          description: URL to the news article.
+        snippet:
+          type: string
+          description: Article excerpt or summary.
+        date:
+          type: string
+          description: Publication date or relative time (e.g., "2 weeks ago").
+        source:
+          type: string
+          description: News source name.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the article thumbnail image.
+        position:
+          type: integer
+          description: Position in news results.
+
+    NewsSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        news:
+          type: array
+          description: News search results.
+          items:
+            $ref: '#/components/schemas/NewsResult'
+
+    PlaceResult:
+      type: object
+      properties:
+        position:
+          type: integer
+          description: Position in results.
+        title:
+          type: string
+          description: Name of the place or business.
+        address:
+          type: string
+          description: Full street address.
+        latitude:
+          type: number
+          format: double
+          description: Latitude coordinate.
+        longitude:
+          type: number
+          format: double
+          description: Longitude coordinate.
+        rating:
+          type: number
+          format: float
+          description: Average rating (1-5).
+        ratingCount:
+          type: integer
+          description: Number of ratings.
+        type:
+          type: string
+          description: Primary business type/category.
+        types:
+          type: array
+          items:
+            type: string
+          description: List of all business types/categories.
+        website:
+          type: string
+          format: uri
+          description: Business website URL.
+        phoneNumber:
+          type: string
+          description: Contact phone number.
+        description:
+          type: string
+          description: Business description.
+        category:
+          type: string
+          description: Business category.
+        cid:
+          type: string
+          description: Google Customer ID for the place.
+
+    MapsSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        ll:
+          type: string
+          description: Coordinates and zoom used for the maps search.
+        places:
+          type: array
+          description: Place results.
+          items:
+            $ref: '#/components/schemas/PlaceResult'
+
+    PlacesSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        places:
+          type: array
+          description: Place search results.
+          items:
+            $ref: '#/components/schemas/PlaceResult'
+
+    VideoResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Video title.
+        link:
+          type: string
+          format: uri
+          description: URL to the video.
+        snippet:
+          type: string
+          description: Video description excerpt.
+        imageUrl:
+          type: string
+          format: uri
+          description: Thumbnail image URL.
+        duration:
+          type: string
+          description: Video duration (e.g., "2:22:33").
+        source:
+          type: string
+          description: Video platform (e.g., "YouTube").
+        channel:
+          type: string
+          description: Channel or uploader name.
+        date:
+          type: string
+          description: Upload date or relative time.
+        position:
+          type: integer
+          description: Position in video results.
+
+    VideoSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        videos:
+          type: array
+          description: Video search results.
+          items:
+            $ref: '#/components/schemas/VideoResult'
+
+    ShoppingResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Product name.
+        source:
+          type: string
+          description: Merchant/retailer name.
+        link:
+          type: string
+          format: uri
+          description: URL to the product listing.
+        price:
+          type: string
+          description: Product price (formatted string, e.g., "$104.97").
+        delivery:
+          type: string
+          description: Delivery information (e.g., "Free shipping", "$8.00 shipping").
+        imageUrl:
+          type: string
+          format: uri
+          description: Product image URL.
+        rating:
+          type: number
+          format: float
+          description: Product rating (1-5).
+        ratingCount:
+          type: integer
+          description: Number of reviews/ratings.
+        offers:
+          type: string
+          description: Number of merchant offers (e.g., "10+").
+        productId:
+          type: string
+          description: Google product ID.
+        position:
+          type: integer
+          description: Position in shopping results.
+
+    ShoppingSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        shopping:
+          type: array
+          description: Shopping search results.
+          items:
+            $ref: '#/components/schemas/ShoppingResult'
+
+    ScholarResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Publication title.
+        link:
+          type: string
+          format: uri
+          description: URL to the publication.
+        publicationInfo:
+          type: string
+          description: Authors, journal, year, and publisher information.
+        snippet:
+          type: string
+          description: Excerpt from the publication abstract.
+        year:
+          type: integer
+          description: Publication year.
+        citedBy:
+          type: integer
+          description: Number of citations.
+        position:
+          type: integer
+          description: Position in scholar results.
+
+    ScholarSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        organic:
+          type: array
+          description: Scholar search results.
+          items:
+            $ref: '#/components/schemas/ScholarResult'
+
+    PatentFigure:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the full-size patent figure image.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: URL to the thumbnail patent figure image.
+
+    PatentResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Patent title.
+        snippet:
+          type: string
+          description: Abstract or description excerpt.
+        link:
+          type: string
+          format: uri
+          description: URL to the patent on Google Patents.
+        priorityDate:
+          type: string
+          format: date
+          description: Priority date of the patent (YYYY-MM-DD).
+        filingDate:
+          type: string
+          format: date
+          description: Filing date of the patent (YYYY-MM-DD).
+        grantDate:
+          type: string
+          format: date
+          description: Grant date of the patent (YYYY-MM-DD).
+        publicationDate:
+          type: string
+          format: date
+          description: Publication date of the patent (YYYY-MM-DD).
+        inventor:
+          type: string
+          description: Inventor name(s).
+        assignee:
+          type: string
+          description: Patent assignee (usually a company).
+        publicationNumber:
+          type: string
+          description: Patent publication number (e.g., "US10678858B2").
+        language:
+          type: string
+          description: Language of the patent document.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: Thumbnail URL of the patent diagram.
+        pdfUrl:
+          type: string
+          format: uri
+          description: URL to the patent PDF.
+        figures:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatentFigure'
+          description: Patent figures and diagrams.
+        position:
+          type: integer
+          description: Position in patent results.
+
+    PatentsSearchResponse:
+      type: object
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        organic:
+          type: array
+          description: Patent search results.
+          items:
+            $ref: '#/components/schemas/PatentResult'
+
+    AutocompleteSuggestion:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Autocomplete suggestion text.
+
+    AutocompleteResponse:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          description: List of autocomplete suggestions.
+          items:
+            $ref: '#/components/schemas/AutocompleteSuggestion'
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+
+  responses:
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

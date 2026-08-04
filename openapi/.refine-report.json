@@ -1,0 +1,32 @@
+{
+  "provider": "serper",
+  "sources": [
+    "serper-autocomplete-api-openapi.yml",
+    "serper-images-api-openapi.yml",
+    "serper-maps-api-openapi.yml",
+    "serper-news-api-openapi.yml",
+    "serper-patents-api-openapi.yml",
+    "serper-places-api-openapi.yml",
+    "serper-scholar-api-openapi.yml",
+    "serper-search-api-openapi.yml",
+    "serper-shopping-api-openapi.yml",
+    "serper-videos-api-openapi.yml"
+  ],
+  "outputs": [
+    "serper-autocomplete-api-openapi.yml",
+    "serper-images-api-openapi.yml",
+    "serper-maps-api-openapi.yml",
+    "serper-news-api-openapi.yml",
+    "serper-patents-api-openapi.yml",
+    "serper-places-api-openapi.yml",
+    "serper-scholar-api-openapi.yml",
+    "serper-search-api-openapi.yml",
+    "serper-shopping-api-openapi.yml",
+    "serper-videos-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
