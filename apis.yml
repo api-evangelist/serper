@@ -1,12 +1,10 @@
 aid: serper
 name: Serper
-description: >-
-  Serper is the world's fastest and most affordable Google Search API, delivering
-  real-time SERP data in 1-2 seconds via a simple REST interface. It supports web
-  search, images, news, maps, places, videos, shopping, scholar, patents, and
-  autocomplete — all returned as structured JSON. Widely used in AI agents, LLM
-  pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free
-  queries and volume pricing down to $0.30 per 1,000 requests.
+description: Serper is the world's fastest and most affordable Google Search API, delivering real-time
+  SERP data in 1-2 seconds via a simple REST interface. It supports web search, images, news, maps, places,
+  videos, shopping, scholar, patents, and autocomplete — all returned as structured JSON. Widely used
+  in AI agents, LLM pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free queries
+  and volume pricing down to $0.30 per 1,000 requests.
 type: Index
 accessModel:
   pricing: freemium
@@ -23,21 +21,32 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/serper.png
 url: https://raw.githubusercontent.com/api-evangelist/serper/refs/heads/main/apis.yml
-created: "2026-06-13"
-modified: "2026-06-13"
-specificationVersion: "0.19"
+created: '2026-06-13'
+modified: '2026-08-13'
+specificationVersion: '0.21'
 tags:
-  - Search
-  - SERP
-  - Google Search
-  - AI
-  - LLM
-  - SEO
-  - Images
-  - News
-  - Maps
-  - Shopping
-
+- Search
+- SERP
+- Google Search
+- AI
+- LLM
+- SEO
+- Images
+- News
+- Maps
+- Shopping
+- Reviews
+- Lens
+- Scraping
+- Locations
+- SERP API
+- Web Search
+- Agents
+- Patents
+- Scholar
+- Autocomplete
+- Places
+- Videos
 apis:
 - aid: serper:serper-autocomplete-api
   name: Serper Autocomplete API
@@ -49,6 +58,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-autocomplete-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-autocomplete-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-images-api
@@ -61,8 +72,44 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-images-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-images-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
+- aid: serper:serper-lens-api
+  name: Serper Lens API
+  description: Google Lens reverse image search from an image URL. Exposed to every playground user; costs
+    3 credits per query.
+  humanURL: https://serper.dev/playground
+  baseURL: https://google.serper.dev
+  tags:
+  - Lens
+  - Image Search
+  - Reverse Image
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-lens-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-lens-api-overlay.yaml
+  - type: Documentation
+    url: https://serper.dev/playground
+- aid: serper:serper-locations-api
+  name: Serper Locations API
+  description: Canonical Google geo-target lookup for the location parameter used by every Serper search
+    endpoint, plus a service health check. The only Serper surface that answers unauthenticated.
+  humanURL: https://api.serper.dev/locations
+  baseURL: https://api.serper.dev
+  tags:
+  - Locations
+  - Geo
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-locations-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-locations-api-overlay.yaml
+  - type: Documentation
+    url: https://serper.dev/playground
 - aid: serper:serper-maps-api
   name: Serper Maps API
   description: Maps and location search
@@ -73,6 +120,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-maps-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-maps-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-news-api
@@ -85,6 +134,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-news-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-news-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-patents-api
@@ -97,6 +148,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-patents-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-patents-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-places-api
@@ -109,8 +162,27 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-places-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-places-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
+- aid: serper:serper-reviews-api
+  name: Serper Reviews API
+  description: Google place reviews by cid, fid or placeId, cursor-paginated with nextPageToken. The only
+    Serper endpoint that uses cursor pagination and the only one where mini-batch is unsupported.
+  humanURL: https://serper.dev/playground
+  baseURL: https://google.serper.dev
+  tags:
+  - Reviews
+  - Places
+  - Local
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-reviews-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-reviews-api-overlay.yaml
+  - type: Documentation
+    url: https://serper.dev/playground
 - aid: serper:serper-scholar-api
   name: Serper Scholar API
   description: Academic publication search
@@ -121,6 +193,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-scholar-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-scholar-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-search-api
@@ -133,6 +207,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-search-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-search-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-shopping-api
@@ -145,6 +221,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-shopping-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-shopping-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
 - aid: serper:serper-videos-api
@@ -157,32 +235,100 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/serper-videos-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-videos-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
+- aid: serper:serper-webpage-scrape-api
+  name: Serper Webpage Scrape API
+  description: Fetch and extract the contents of a URL, optionally as markdown with images, links and
+    videos. Served from a separate host and priced per difficulty at 2, 6 or 10 credits, with the credits
+    consumed returned in the response.
+  humanURL: https://serper.dev/playground
+  baseURL: https://scrape.serper.dev
+  tags:
+  - Scraping
+  - Markdown
+  - Content Extraction
+  properties:
+  - type: OpenAPI
+    url: openapi/serper-webpage-scrape-api-openapi.yml
+  - type: Overlay
+    url: overlays/serper-webpage-scrape-api-overlay.yaml
+  - type: Documentation
+    url: https://serper.dev/playground
 common:
-  - type: AgenticAccess
-    url: agentic-access/serper-agentic-access.yml
-  - type: DomainSecurity
-    url: security/serper-domain-security.yml
-  - type: Authentication
-    url: authentication/serper-authentication.yml
-  - type: Website
-    url: https://serper.dev
-  - type: Documentation
-    url: https://serper.dev
-  - type: GitHubOrg
-    url: https://github.com/Serper-API
-  - type: X
-    url: https://x.com/serperapi
-  - type: Pricing
-    url: https://serper.dev
-  - type: Plans
-    url: plans/serper-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/serper-rate-limits.yml
-  - type: FinOps
-    url: finops/serper-finops.yml
-
+- type: AgenticAccess
+  url: agentic-access/serper-agentic-access.yml
+- type: DomainSecurity
+  url: security/serper-domain-security.yml
+- type: Authentication
+  url: authentication/serper-authentication.yml
+- type: Website
+  url: https://serper.dev
+- type: Documentation
+  url: https://serper.dev
+- type: GitHubOrg
+  url: https://github.com/Serper-API
+- type: X
+  url: https://x.com/serperapi
+- type: Pricing
+  url: https://serper.dev/#pricing
+- type: Plans
+  url: plans/serper-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/serper-rate-limits.yml
+- type: FinOps
+  url: finops/serper-finops.yml
+- type: Packages
+  url: packages/serper-packages.yml
+- type: WellKnownProbe
+  url: well-known/serper-well-known.yml
+- type: MCPServer
+  url: mcp/serper-mcp.yml
+- type: LLMsTxt
+  url: llms/serper-llms.txt
+- type: Conformance
+  url: conformance/serper-conformance.yml
+- type: ErrorCatalog
+  url: errors/serper-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/serper-lifecycle.yml
+- type: StatusPage
+  url: https://serper.betteruptime.com
+- type: Conventions
+  url: conventions/serper-conventions.yml
+- type: DataModel
+  url: data-model/serper-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://serper.dev/playground
+- type: APIReference
+  url: https://serper.dev/playground
+- type: Playground
+  url: https://serper.dev/playground
+- type: GettingStarted
+  url: https://serper.dev/signup
+- type: SignUp
+  url: https://serper.dev/signup
+- type: Login
+  url: https://serper.dev/login
+- type: Support
+  url: mailto:support@serper.dev
+- type: TermsOfService
+  url: https://serper.dev/terms
+- type: PrivacyPolicy
+  url: https://serper.dev/privacy
+- type: CookiePolicy
+  url: https://serper.dev/cookies
+- type: Blog
+  url: https://medium.com/@serper/list/articles-3f700b49cbc4
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 32
+  pass: local-v1
