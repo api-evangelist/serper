@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "7a168c6b-ca23-46e8-b7fc-182a4be09653",
+      "name": "Search",
+      "description": {
+        "content": "Web search results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d5291046-478f-4a04-b191-d32af9893b67",
+          "name": "Web Search",
+          "request": {
+            "name": "Web Search",
+            "description": {
+              "content": "Perform a Google web search and receive structured SERP data including organic results, knowledge graph, answer box, people also ask, and related searches.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q\": \"<string>\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10,\n  \"page\": 1,\n  \"tbs\": \"<string>\",\n  \"autocorrect\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab7bd8fb-0cb7-4de8-8436-e507b625b8d5",
+              "name": "Successful search response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"google search\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"searchParameters\": {\n    \"q\": \"google search\",\n    \"gl\": \"us\",\n    \"hl\": \"en\",\n    \"type\": \"search\",\n    \"num\": 10\n  },\n  \"knowledgeGraph\": {\n    \"title\": \"Google Search\",\n    \"type\": \"Website\",\n    \"website\": \"https://google.com/\",\n    \"imageUrl\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:example\",\n    \"description\": \"Google Search is a search engine provided and operated by Google.\",\n    \"descriptionSource\": \"Wikipedia\",\n    \"descriptionLink\": \"https://en.wikipedia.org/wiki/Google_Search\",\n    \"attributes\": {\n      \"Written in\": \"Python, C, and C++\",\n      \"Category\": \"Search engine\",\n      \"Date launched\": \"1998\"\n    }\n  },\n  \"organic\": [\n    {\n      \"title\": \"Google\",\n      \"link\": \"https://www.google.com/\",\n      \"snippet\": \"Search the world's information...\",\n      \"position\": 1,\n      \"sitelinks\": [\n        {\n          \"title\": \"Images\",\n          \"link\": \"https://images.google.com/\"\n        }\n      ]\n    }\n  ],\n  \"peopleAlsoAsk\": [\n    {\n      \"question\": \"How does Google Search work?\",\n      \"snippet\": \"Google Search uses automated software...\",\n      \"title\": \"How Search works\",\n      \"link\": \"https://www.google.com/search/howsearchworks/\"\n    }\n  ],\n  \"relatedSearches\": [\n    {\n      \"query\": \"google search engine\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d42ad6a-3f06-429a-83a0-7d5bb7aabe02",
+              "name": "Bad request — missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"google search\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b526a89-88fd-4231-a9a4-933099ae270e",
+              "name": "Unauthorized — invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"google search\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dd82af7-6e4e-4311-beaa-8d490bb1ed5d",
+              "name": "Too many requests — rate limit exceeded or credits exhausted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"google search\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://google.serper.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "60a67a5e-a271-441e-b0ca-ff9711334c36",
+    "name": "Serper Google Autocomplete Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.\n\nContact Support:\n Name: Serper Support",
+      "type": "text/plain"
+    }
+  }
+}

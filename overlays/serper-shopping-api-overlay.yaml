@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Serper Google Search Autocomplete Shopping API
+  version: 1.0.0
+extends: ../openapi/serper-shopping-api-openapi.yml
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: openapi/serper-shopping-api-openapi.yml + conventions/, rate-limits/, errors/, lifecycle/ in
+    this repo
+actions:
+- target: $.info
+  description: Record API Evangelist provenance and the real support contact.
+  update:
+    contact:
+      name: Serper Support
+      url: https://serper.dev
+      email: support@serper.dev
+    termsOfService: https://serper.dev/terms
+    x-apievangelist-profile: https://github.com/api-evangelist/serper
+- target: $
+  description: Attach the runtime semantics Serper does not publish in the spec itself.
+  update:
+    x-conventions: conventions/serper-conventions.yml
+    x-rate-limits: rate-limits/serper-rate-limits.yml
+    x-plans: plans/serper-plans-pricing.yml
+    x-errors: errors/serper-problem-types.yml
+    x-lifecycle: lifecycle/serper-lifecycle.yml
+    x-authentication: authentication/serper-authentication.yml
+    x-status-page: https://serper.betteruptime.com
+- target: $.components.securitySchemes
+  description: 'Record the second, weaker auth convention Serper also accepts: the API key as an apiKey
+    query parameter on a GET.'
+  update:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: Alternative to X-API-KEY, emitted by Serper's own playground when GET is selected.
+        Places the credential in the URL; prefer the header.
+- target: $.paths['/shopping'].post
+  description: Annotate shoppingSearch with its credit cost and mini-batch behaviour.
+  update:
+    x-credit-cost: see rate-limits/serper-rate-limits.yml#creditCosts
+    x-mini-batch: Send an array of up to 100 query objects to this path; costs 3x.
+    x-billing: Credits are deducted only on a successful response.

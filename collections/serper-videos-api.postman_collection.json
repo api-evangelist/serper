@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "80b070f5-b59a-465f-be2b-a73e9d024aad",
+      "name": "Videos",
+      "description": {
+        "content": "Video search results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aef840a3-8026-4ef9-9957-8c99bac636a5",
+          "name": "Video Search",
+          "request": {
+            "name": "Video Search",
+            "description": {
+              "content": "Perform a Google Video search returning structured video results with titles, links, thumbnails, durations, channels, and sources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "videos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q\": \"<string>\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10,\n  \"page\": 1,\n  \"tbs\": \"<string>\",\n  \"autocorrect\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5838f12-36b5-4bb5-81b3-005f7360d9f3",
+              "name": "Successful video search response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"SpaceX launch\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"searchParameters\": {\n    \"q\": \"string\",\n    \"gl\": \"string\",\n    \"hl\": \"string\",\n    \"type\": \"string\",\n    \"num\": 3396,\n    \"page\": 4985\n  },\n  \"videos\": [\n    {\n      \"title\": \"string\",\n      \"link\": \"http://H.wgkwVaCwSTVeF72irVG76IYOG0tKbk4\",\n      \"snippet\": \"string\",\n      \"imageUrl\": \"https://NTJQvdxHTXUiIcucqlxLUkVmqpdGOLajD.wnjsQfNIYxlJeCC6wdcRjgKcOmOIT8SZVvCLOkn1TNnNDEuqXrQjkCO1xWC4xO2M\",\n      \"duration\": \"string\",\n      \"source\": \"string\",\n      \"channel\": \"string\",\n      \"date\": \"string\",\n      \"position\": 8302\n    },\n    {\n      \"title\": \"string\",\n      \"link\": \"https://VlFPtOh.milWQoQ6,AdLuCZRO7Hq3VAHzaM64J5QaA-1dvyjoq35t6YgynlhHVP1JPe\",\n      \"snippet\": \"string\",\n      \"imageUrl\": \"https://bivtBBt.afxTlMs3S6dpiB-LnPb\",\n      \"duration\": \"string\",\n      \"source\": \"string\",\n      \"channel\": \"string\",\n      \"date\": \"string\",\n      \"position\": 7797\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0659068-385d-400e-86bb-38fdc973a249",
+              "name": "Bad request — missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"SpaceX launch\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efcfc27c-3b45-443f-9d31-655d90759a66",
+              "name": "Unauthorized — invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"SpaceX launch\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "677ef694-3d77-438a-97d2-50752aefe8c9",
+              "name": "Too many requests — rate limit exceeded or credits exhausted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "videos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"SpaceX launch\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://google.serper.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e59318f1-144e-4015-968f-96ed3d53f88b",
+    "name": "Serper Google Search Autocomplete Videos API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.\n\nContact Support:\n Name: Serper Support",
+      "type": "text/plain"
+    }
+  }
+}

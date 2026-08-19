@@ -1,0 +1,107 @@
+# Serper
+
+> Serper is a high-throughput Google SERP API. One POST with an `X-API-KEY` header
+> returns structured JSON for web, image, video, news, places, maps, reviews, shopping,
+> scholar, patent, autocomplete and Lens searches, plus a webpage scrape surface that
+> returns page contents as markdown. Typical latency is 1-2 seconds. Nothing is cached —
+> every call is a live query against Google. Billing is prepaid credits, not a
+> subscription, and the credit cost per query varies by search type.
+
+<!--
+generated: 2026-08-13
+method: generated
+source: apis.yml + openapi/ + conventions/ + rate-limits/ in this repo. Serper publishes
+no llms.txt of its own — https://serper.dev/llms.txt returned HTTP 404 on 2026-08-13.
+This file is written by API Evangelist, not by Serper.
+-->
+
+## Getting started
+
+- [Sign up (2,500 free credits, no card)](https://serper.dev/signup)
+- [API keys](https://serper.dev/api-keys)
+- [Playground](https://serper.dev/playground): the only interactive reference Serper
+  publishes. It requires a login, and there is no separate documentation site.
+- [Pricing and FAQ](https://serper.dev)
+- [Status](https://serper.betteruptime.com)
+- Support: support@serper.dev
+
+## How to call it
+
+- Method: `POST`, `Content-Type: application/json`, header `X-API-KEY: <your key>`.
+- The path selects the search type. The body is a flat JSON object of parameters.
+- A `GET` variant works too: every field becomes a query parameter and the key is passed
+  as `apiKey` in the URL. Prefer POST — the GET form leaks the credential into logs.
+- Mini-batch: send an ARRAY of up to 100 query objects to the same path. It costs 3x the
+  single-query credit rate and is not supported on `/reviews`.
+- Common parameters: `q` (query), `gl` (country, default `us`), `hl` (language, default
+  `en`), `location` (canonical location string), `num` (results, default 10), `page`
+  (default 1), `tbs` (time filter, e.g. `qdr:d`), `autocorrect` (default true).
+
+## Endpoints
+
+Base `https://google.serper.dev`:
+
+- `POST /search` — web search (organic, knowledgeGraph, answerBox, peopleAlsoAsk, relatedSearches). 1 credit.
+- `POST /images` — image search. 1 credit; 2 when `num` > 10.
+- `POST /videos` — video search. 1 credit.
+- `POST /news` — news search. 1 credit.
+- `POST /places` — local business search. 1 credit.
+- `POST /maps` — maps search by `q`, `ll`, `placeId` or `cid`. 3 credits.
+- `POST /reviews` — place reviews by `cid`/`fid`/`placeId`, cursor-paginated with `nextPageToken`. 1 credit.
+- `POST /shopping` — product search. 2 credits.
+- `POST /scholar` — academic search. 1 credit.
+- `POST /patents` — patent search. 1 credit.
+- `POST /autocomplete` — query suggestions. 1 credit.
+- `POST /lens` — reverse image search from an image `url`. 3 credits.
+
+Other hosts:
+
+- `POST https://scrape.serper.dev` — scrape a webpage. Body `{url, includeMarkdown,
+  includeImages, includeLinks, includeVideos}`. Costs 2 credits typically, 6 or 10 for
+  hard pages; the credits consumed are returned in the response.
+- `GET https://api.serper.dev/locations?q=<term>&limit=25` — canonical location values
+  for the `location` parameter. **No API key required.**
+- `GET https://api.serper.dev/health` — service health. No API key required.
+
+## What Serper does not have
+
+An agent should not go looking for these — they do not exist:
+
+- No OpenAPI, Swagger or GraphQL schema published by Serper.
+- No first-party SDK on npm, PyPI or any other registry. Every client library and MCP
+  server for Serper is third-party.
+- No first-party MCP server and no hosted MCP endpoint.
+- No A2A agent card, no `/.well-known/` documents of any kind, no `llms.txt`.
+- No webhooks, no streaming, no event surface.
+- No API versioning, no deprecation policy, no changelog, no `Sunset` headers.
+- No rate-limit response headers and no `Retry-After`. HTTP 429 is the only signal.
+- No request/correlation ID in any response.
+- No OAuth, no scopes, no key expiry.
+
+## Errors
+
+Flat JSON, not RFC 9457.
+
+- Gateway hosts: `{"message": "...", "statusCode": 403}`
+- `api.serper.dev`: `{"statusCode": 404, "message": "...", "error": "Not Found"}`
+- `403` — missing or invalid key. `429` — QPS limit exceeded or credit balance is zero.
+- Credits are deducted only on successful responses, so a failed call is not billed.
+
+## Limits and cost
+
+- Concurrency is per-account and tied to the credit package: 50 QPS (Starter, $50/50k),
+  100 QPS (Standard, $375/500k), 200 QPS (Scale, $1,250/2.5M), 300 QPS (Ultimate,
+  $3,750/12.5M). Higher available on request.
+- Credits expire 6 months after purchase. Full refund within 7 days if under 20% used.
+- Serper does not cache. Client-side caching is the single biggest cost lever.
+
+## Artifacts in this profile
+
+- [OpenAPI definitions](../openapi/) — written by API Evangelist, one per search type.
+- [Conventions](../conventions/serper-conventions.yml) — auth, pagination, batching, metering.
+- [Rate limits and credit costs](../rate-limits/serper-rate-limits.yml)
+- [Plans and pricing](../plans/serper-plans-pricing.yml)
+- [Errors](../errors/serper-problem-types.yml)
+- [Lifecycle](../lifecycle/serper-lifecycle.yml)
+- [Authentication](../authentication/serper-authentication.yml)
+- [Agent skills](../skills/)

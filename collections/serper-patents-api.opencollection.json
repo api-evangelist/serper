@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete Patents API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Patents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Patents Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/patents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Google Patents search returning patent records with titles, snippets, priority dates, filing dates, grant dates, inventors, assignees, publication numbers, and figure images."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

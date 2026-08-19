@@ -1,42 +1,49 @@
 specificationVersion: "0.1"
 id: serper-plans-pricing
 name: Serper Plans and Pricing
+generated: '2026-08-13'
+method: searched
+source: https://serper.dev (pricing section + FAQ, read 2026-08-13)
 description: >-
-  Serper uses a credit-based pricing model. Credits are purchased in packages
-  and are valid for 6 months. Pricing decreases with volume, from $1.00 per
-  1,000 queries at the Starter tier down to $0.30 per 1,000 queries at the
-  Ultimate tier. A free trial provides 2,500 credits with no credit card required.
-  Requesting 100 results per page (vs the default 10) doubles credit consumption.
+  Serper sells prepaid credits, not subscriptions. Four top-up packages are published on
+  the homepage, plus a 2,500-credit free trial with no credit card. Price per 1,000
+  queries falls from $1.00 to $0.30 as package size rises, and the queries-per-second
+  concurrency limit is attached to the package you buy. Credits expire 6 months after
+  purchase. Prices exclude sales tax/VAT/GST. Paddle is the merchant of record.
 url: https://serper.dev
+plan_count: 5
+
+correction:
+  date: '2026-08-13'
+  detail: >-
+    The previous version of this file listed QPS limits of 50/100/150/200/300 for
+    Free/Starter/Standard/Scale/Ultimate. Serper's published pricing table states
+    50/100/200/300 for Starter/Standard/Scale/Ultimate and states no QPS for the free
+    trial. The values below are transcribed from Serper's own page.
 
 plans:
   - name: Free Trial
     description: >-
-      2,500 free queries to evaluate the API with no credit card required.
-      Includes full access to all search types and the standard rate limit.
+      2,500 free queries to evaluate the API, with no credit card required. Serper
+      publishes no concurrency limit for the trial.
     price: 0.00
     currency: USD
     billingPeriod: one-time
     credits: 2500
-    creditExpiry: none
+    costPer1kCredits: 0.00
+    creditExpiry: not published
     rateLimits:
-      requestsPerSecond: 50
+      requestsPerSecond: null
+      note: Not stated on Serper's pricing page.
     features:
-      - Web search
-      - Image search
-      - News search
-      - Maps and Places
-      - Videos search
-      - Shopping search
-      - Scholar and Patents
-      - Autocomplete
+      - Full access to all published search types
+      - Real-time results
+      - Customize query location
       - Structured JSON responses
       - X-API-KEY authentication
 
   - name: Starter
-    description: >-
-      Entry-level paid plan for individual developers and small applications.
-      Credits are non-expiring prepaid bundles.
+    description: Entry-level prepaid credit package.
     price: 50.00
     currency: USD
     billingPeriod: one-time
@@ -44,16 +51,16 @@ plans:
     costPer1kCredits: 1.00
     creditExpiry: 6 months
     rateLimits:
-      requestsPerSecond: 100
+      requestsPerSecond: 50
     features:
-      - All Free Trial features
-      - Prepaid credit model (no monthly lock-in)
-      - Standard support
+      - Submit 50,000 queries
+      - 50 queries per second
+      - Real-time results
+      - Customize query location
+      - Credits valid for 6 months
 
   - name: Standard
-    description: >-
-      Mid-volume plan suited to production AI agents and SEO tools. Includes
-      priority support and higher concurrency limits.
+    description: Mid-volume prepaid credit package.
     price: 375.00
     currency: USD
     billingPeriod: one-time
@@ -61,15 +68,16 @@ plans:
     costPer1kCredits: 0.75
     creditExpiry: 6 months
     rateLimits:
-      requestsPerSecond: 150
+      requestsPerSecond: 100
     features:
-      - All Starter features
-      - Priority support
-      - Higher rate limits
+      - Submit 500,000 queries
+      - 100 queries per second
+      - Real-time results
+      - Customize query location
+      - Credits valid for 6 months
 
   - name: Scale
-    description: >-
-      High-volume plan for demanding SERP pipelines and large AI deployments.
+    description: High-volume prepaid credit package.
     price: 1250.00
     currency: USD
     billingPeriod: one-time
@@ -79,15 +87,17 @@ plans:
     rateLimits:
       requestsPerSecond: 200
     features:
-      - All Standard features
-      - Priority support
-      - High concurrency
+      - Submit 2,500,000 queries
+      - 200 queries per second
+      - Real-time results
+      - Customize query location
+      - Credits valid for 6 months
 
   - name: Ultimate
     description: >-
-      Enterprise-grade plan with dedicated infrastructure, SLA coverage, and
-      the lowest per-query rate of $0.30 per 1,000 queries. Default concurrency
-      limit of 300 QPS with higher limits available upon request.
+      Largest published credit package, at the lowest per-query rate. Serper's FAQ states
+      the 300 QPS default allows roughly 15,000-18,000 searches per minute and that the
+      limit can be raised for a specific use case on request.
     price: 3750.00
     currency: USD
     billingPeriod: one-time
@@ -96,8 +106,32 @@ plans:
     creditExpiry: 6 months
     rateLimits:
       requestsPerSecond: 300
+      raisableOnRequest: true
     features:
-      - All Scale features
-      - Dedicated infrastructure
-      - SLA guarantee
-      - Custom concurrency limits on request
+      - Submit 12,500,000 queries
+      - 300 queries per second
+      - Real-time results
+      - Customize query location
+      - Credits valid for 6 months
+
+commercial:
+  taxNote: Prices exclude sales tax / VAT / GST.
+  merchantOfRecord: Paddle
+  paymentMethods:
+    - Visa
+    - Mastercard
+    - American Express
+    - Discover
+    - PayPal
+  refundPolicy: >-
+    Full refund within 7 days of the initial credit purchase, unless more than 20% of the
+    credits have been used.
+  enterprise: >-
+    No separate enterprise tier is published; the "Contact us" call to action leads to
+    the same signup. Higher concurrency is negotiated on the Ultimate package.
+
+creditCosts:
+  note: >-
+    Not every query costs one credit. Cost varies by search type and by result count —
+    see rate-limits/serper-rate-limits.yml for the full multiplier table read from
+    Serper's own playground.

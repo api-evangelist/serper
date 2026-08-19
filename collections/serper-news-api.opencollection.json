@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete News API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "News",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "News Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/news",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Google News search and receive structured news article results including titles, links, snippets, dates, sources, and images."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

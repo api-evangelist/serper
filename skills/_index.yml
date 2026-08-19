@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/ in this repo, grounded in real operationIds
+name: Serper Agent Skills
+description: >-
+  Packaged Agent Skills for Serper's published API surface. Every operationId referenced
+  below exists in an OpenAPI definition in openapi/. Serper publishes no skills or
+  AGENTS.md of its own — these are written by API Evangelist. Each skill carries the
+  credit cost of the calls it makes, because on Serper the cost of a flow is not
+  proportional to the number of calls in it.
+
+skills:
+  - name: serper-web-research
+    file: serper-web-research.md
+    description: >-
+      Search the live web and scrape the winning pages to markdown for citation.
+    operations: [webSearch, scrapeWebpage, listLocations]
+    typical_credits: 7
+
+  - name: serper-local-business-lookup
+    file: serper-local-business-lookup.md
+    description: >-
+      Find a place, then pull its Google reviews using the placeId/cid/fid the first
+      call returns — the only cross-request join in Serper's surface.
+    operations: [placesSearch, mapsSearch, placeReviews, listLocations]
+    typical_credits: 2
+
+  - name: serper-serp-monitoring
+    file: serper-serp-monitoring.md
+    description: >-
+      Repeatedly track a keyword set's ranking and news coverage, with the batching and
+      cost-control rules a scheduled job needs.
+    operations: [webSearch, newsSearch, autocomplete]
+    typical_credits: 1 per keyword per run
+
+  - name: serper-visual-product-lookup
+    file: serper-visual-product-lookup.md
+    description: Identify a product from an image with Lens, then price it via shopping search.
+    operations: [lensSearch, shoppingSearch, imageSearch]
+    typical_credits: 5
+
+shared_rules:
+  auth: X-API-KEY header on POST; never the apiKey query parameter.
+  errors: '{"message": string, "statusCode": integer}'
+  retry: >-
+    No Retry-After and no RateLimit-* headers exist. Back off with exponential delay and
+    jitter. Failed calls are not billed.
+  idempotency: >-
+    None published. Every operation is a read, but every call is billed, so a retry has a
+    cost consequence even though it has no data consequence.
+  caching: >-
+    Serper caches nothing. Client-side caching is the consumer's job and the largest cost
+    lever available.
+  references:
+    - conventions/serper-conventions.yml
+    - errors/serper-problem-types.yml
+    - rate-limits/serper-rate-limits.yml
+    - authentication/serper-authentication.yml

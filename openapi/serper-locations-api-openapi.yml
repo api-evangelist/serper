@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Serper Locations API
+  description: >-
+    Lookup service for the canonical location values accepted by the `location`
+    parameter on Serper's search endpoints. Serper's own playground links this endpoint
+    as the published "list of supported locations". It answers unauthenticated.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+    email: support@serper.dev
+  termsOfService: https://serper.dev/terms
+  license:
+    name: Commercial
+    url: https://serper.dev
+  x-provenance:
+    method: probed
+    generated: '2026-08-13'
+    source: >-
+      https://api.serper.dev/locations?q=new&limit=25 — HTTP 200, application/json,
+      probed unauthenticated 2026-08-13. Endpoint and parameters read from Serper's own
+      playground bundle
+      (https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js),
+      which calls GET /locations?q=<term>&limit=25 and links it to users as the
+      supported-locations reference.
+    note: >-
+      Response schema below is transcribed from a real observed 200 response body, not
+      invented.
+
+servers:
+  - url: https://api.serper.dev
+    description: Serper platform API host
+
+tags:
+  - name: Locations
+    description: Canonical search-location lookup
+
+paths:
+  /locations:
+    get:
+      operationId: listLocations
+      summary: Search supported locations
+      description: >-
+        Return canonical Google location targets matching a search term. The returned
+        `canonicalName` is the value to pass as the `location` parameter on Serper's
+        search endpoints.
+      tags:
+        - Locations
+      parameters:
+        - name: q
+          in: query
+          description: Location search term.
+          required: false
+          schema:
+            type: string
+          example: new
+        - name: limit
+          in: query
+          description: Maximum number of locations to return.
+          required: false
+          schema:
+            type: integer
+          example: 25
+      responses:
+        '200':
+          description: An array of matching locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+              example:
+                - name: New Caledonia
+                  canonicalName: New Caledonia
+                  googleId: 2540
+                  countryCode: NC
+                  targetType: Country
+                - name: New South Wales
+                  canonicalName: New South Wales,Australia
+                  googleId: 20035
+                  countryCode: AU
+                  targetType: State
+  /health:
+    get:
+      operationId: getHealth
+      summary: Service health
+      description: >-
+        Unauthenticated health check. Observed returning
+        {"status":"ok","info":{"database":{"status":"up"}},...} on 2026-08-13.
+      tags:
+        - Locations
+      responses:
+        '200':
+          description: Health report.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Overall service status.
+                  info:
+                    type: object
+                    additionalProperties: true
+                    description: Per-dependency status.
+                  error:
+                    type: object
+                    additionalProperties: true
+                  details:
+                    type: object
+                    additionalProperties: true
+
+components:
+  schemas:
+    Location:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Display name of the location.
+        canonicalName:
+          type: string
+          description: >-
+            Fully qualified location string, e.g. "New South Wales,Australia". This is
+            the value passed to the `location` parameter on search endpoints.
+        googleId:
+          type: integer
+          description: Google geo target criteria ID.
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        targetType:
+          type: string
+          description: Granularity of the target, e.g. Country, State, City.

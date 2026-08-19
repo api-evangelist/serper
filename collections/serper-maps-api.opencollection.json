@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete Maps API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Maps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Maps Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/maps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Google Maps search returning local business and place data with coordinates, ratings, addresses, and contact information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,132 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ in this repo (14 definitions), json-schema/, examples/
+name: Serper Data Model
+description: >-
+  Serper has no persistent domain model — there are no accounts, objects or records to
+  create, read, update or delete over the API. What it returns is a projection of a
+  Google SERP: a request envelope (searchParameters) plus a set of optional result
+  blocks, each an array of shallow, id-less items. There are no foreign keys and no
+  entity graph in the usual sense. The one place identity does appear is the places/maps
+  family, where Google's own identifiers (placeId, cid, fid) are the join keys between a
+  place and its reviews.
+
+shape: response-projection
+persistent_entities: 0
+identifier_prefixes: none
+
+entities:
+  - name: SearchParameters
+    description: Echo of the submitted query. Present on every search response.
+    fields: [q, gl, hl, type, num, page]
+    source: openapi/serper-search-api-openapi.yml
+
+  - name: OrganicResult
+    description: A single ranked web result.
+    fields: [title, link, snippet, position, sitelinks, attributes, date]
+    source: openapi/serper-search-api-openapi.yml
+
+  - name: Sitelink
+    description: A sub-link rendered beneath an organic result.
+    fields: [title, link]
+
+  - name: KnowledgeGraph
+    description: Google's entity panel for the query.
+    fields:
+      [title, type, website, imageUrl, description, descriptionSource, descriptionLink, attributes]
+
+  - name: AnswerBox
+    description: Google's direct answer for the query.
+    fields: [snippet, snippetHighlighted, title, link, date]
+
+  - name: PeopleAlsoAsk
+    description: A related question and its short answer.
+    fields: [question, snippet, title, link]
+
+  - name: RelatedSearch
+    description: A suggested follow-on query.
+    fields: [query]
+
+  - name: ImageResult
+    description: An image search hit.
+    fields: [title, imageUrl, imageWidth, imageHeight, thumbnailUrl, source, domain, link, position]
+    source: examples/serper-image-search-example.json
+
+  - name: Place
+    description: A local business or point of interest.
+    identifiers: [placeId, cid, fid]
+    source: openapi/serper-places-api-openapi.yml
+
+  - name: Review
+    description: A single Google review for a place.
+    source: openapi/serper-reviews-api-openapi.yml
+
+  - name: Location
+    description: >-
+      A canonical Google geo target. The only genuinely enumerable, addressable entity in
+      Serper's surface — it has a stable googleId and is retrievable unauthenticated.
+    identifiers: [googleId, canonicalName]
+    fields: [name, canonicalName, googleId, countryCode, targetType]
+    source: openapi/serper-locations-api-openapi.yml
+
+  - name: ScrapedPage
+    description: >-
+      Extracted contents of a URL. Keyed by the URL itself; Serper stores nothing and
+      returns no identifier.
+    source: openapi/serper-webpage-scrape-api-openapi.yml
+
+relationships:
+  - from: SearchResponse
+    to: SearchParameters
+    type: has_one
+    via: searchParameters
+  - from: SearchResponse
+    to: OrganicResult
+    type: has_many
+    via: organic
+  - from: SearchResponse
+    to: PeopleAlsoAsk
+    type: has_many
+    via: peopleAlsoAsk
+  - from: SearchResponse
+    to: RelatedSearch
+    type: has_many
+    via: relatedSearches
+  - from: SearchResponse
+    to: KnowledgeGraph
+    type: has_one
+    via: knowledgeGraph
+  - from: SearchResponse
+    to: AnswerBox
+    type: has_one
+    via: answerBox
+  - from: OrganicResult
+    to: Sitelink
+    type: has_many
+    via: sitelinks
+  - from: Review
+    to: Place
+    type: belongs_to
+    via: placeId | cid | fid
+    note: >-
+      The only real cross-request join in Serper's surface: /places or /maps returns a
+      placeId/cid/fid, and /reviews takes one of those as input.
+  - from: SearchRequest
+    to: Location
+    type: belongs_to
+    via: location -> Location.canonicalName
+    note: >-
+      The `location` parameter is a foreign key into the enumerable location list served
+      by GET https://api.serper.dev/locations.
+
+notes:
+  - >-
+    Result-block presence is conditional on what Google returned, not on the schema. A
+    consumer must treat every top-level block as optional; there is no documented
+    guarantee that `organic` is present.
+  - >-
+    Positions are 1-indexed within a page, not globally across pages, so a client
+    paginating with `page` must compute absolute rank itself.
+  - >-
+    No item in any result block carries a stable Serper identifier, so results cannot be
+    deduplicated or diffed across calls except by URL.

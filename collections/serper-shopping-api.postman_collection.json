@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "b1a49462-5c83-4123-9108-8f9f9ce0b7ba",
+      "name": "Shopping",
+      "description": {
+        "content": "Product and shopping search results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f0beb87e-cc24-4adf-b50e-f582d46b012f",
+          "name": "Shopping Search",
+          "request": {
+            "name": "Shopping Search",
+            "description": {
+              "content": "Perform a Google Shopping search returning product listings with titles, prices, sources, delivery info, ratings, images, and product IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shopping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q\": \"<string>\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10,\n  \"page\": 1,\n  \"tbs\": \"<string>\",\n  \"autocorrect\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "980ff233-ff8e-4139-a06c-61a4f848948f",
+              "name": "Successful shopping search response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"Nike Air Max\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"searchParameters\": {\n    \"q\": \"string\",\n    \"gl\": \"string\",\n    \"hl\": \"string\",\n    \"type\": \"string\",\n    \"num\": 7835,\n    \"page\": 5840\n  },\n  \"shopping\": [\n    {\n      \"title\": \"string\",\n      \"source\": \"string\",\n      \"link\": \"https://FfpkKyswWt.qnmAhJidsKKCgNO8Qz+s2dCGxOb.yihZsqPpGy3+98TZcj78mBtUy0IkgRvSjhw8rHqqx-gUk4yH5qDc\",\n      \"price\": \"string\",\n      \"delivery\": \"string\",\n      \"imageUrl\": \"http://nQlRDDKEJyVPPoZVgz.khzdEzNbY+oGcDuwZ\",\n      \"rating\": 2541.266574412041,\n      \"ratingCount\": 1529,\n      \"offers\": \"string\",\n      \"productId\": \"string\",\n      \"position\": 2868\n    },\n    {\n      \"title\": \"string\",\n      \"source\": \"string\",\n      \"link\": \"http://JqqieaPcxapYEQ.aijaZD927JeLrPqXg1T9ir1m6a\",\n      \"price\": \"string\",\n      \"delivery\": \"string\",\n      \"imageUrl\": \"https://UkWEFtVECXFJDOlj.vbaqZLD5sFhssgffO.8\",\n      \"rating\": 3332.244488104137,\n      \"ratingCount\": 5366,\n      \"offers\": \"string\",\n      \"productId\": \"string\",\n      \"position\": 6723\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "035d3db1-5f16-4655-b36a-e4abe724f688",
+              "name": "Bad request — missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"Nike Air Max\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e159294d-32fd-4a7f-9ac7-cbc9558679ed",
+              "name": "Unauthorized — invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"Nike Air Max\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b41cdb70-0d32-4372-9bf5-e16947b25b54",
+              "name": "Too many requests — rate limit exceeded or credits exhausted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"Nike Air Max\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://google.serper.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2c0d5eec-7a84-431b-bdee-a4514681690e",
+    "name": "Serper Google Search Autocomplete Shopping API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.\n\nContact Support:\n Name: Serper Support",
+      "type": "text/plain"
+    }
+  }
+}

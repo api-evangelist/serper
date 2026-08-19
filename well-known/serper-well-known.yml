@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of every Serper host, 2026-08-13
+name: Serper Well-Known Probe
+description: >-
+  Serper serves NO /.well-known/ documents on any of its hosts. The marketing site
+  (serper.dev) returns a real Next.js 404 for every path. The API hosts
+  (google.serper.dev, scrape.serper.dev, bing.serper.dev) sit behind an API gateway that
+  answers every path — including /.well-known/* — with HTTP 403
+  {"message":"Unauthorized. Sign up for a free account.","statusCode":403}, so a
+  .well-known document could not be served there even if one existed. The platform host
+  (api.serper.dev) is a NestJS app returning 404 {"statusCode":404,"message":"Cannot GET
+  ..."} for these paths. No WellKnown or SecurityTxt pointer is emitted — this file
+  records an absence, not a presence.
+
+summary:
+  hosts_probed: 4
+  documents_found: 0
+  pointer_emitted: false
+
+hosts:
+  - host: serper.dev
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+
+  - host: google.serper.dev
+    note: >-
+      API gateway. Every path returns 403 with the same JSON body regardless of what is
+      requested, so a 403 here is not evidence about a specific document.
+    paths:
+      - path: /.well-known/security.txt
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+
+  - host: api.serper.dev
+    note: NestJS platform host. Returns a routed 404 for unknown paths.
+    paths:
+      - path: /openapi.json
+        status: 404
+        file: null
+      - path: /swagger.json
+        status: 404
+        file: null
+      - path: /api-json
+        status: 404
+        file: null
+
+  - host: scrape.serper.dev
+    note: API gateway; same blanket 403 as google.serper.dev.
+    paths:
+      - path: /
+        status: 403
+        file: null
+
+related:
+  - path: /robots.txt
+    host: serper.dev
+    status: 200
+    note: >-
+      Serves the Cloudflare "content signals" preamble (search / ai-input / ai-train
+      definitions and the EU DSM Article 4 reservation of rights) but declares no
+      User-agent or content-signal directives of its own — the boilerplate is present
+      with no policy attached to it.

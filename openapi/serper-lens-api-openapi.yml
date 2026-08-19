@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: Serper Lens API
+  description: >-
+    Google Lens reverse image search. Submit an image URL and receive structured visual
+    match results. Serper's own playground exposes this as the "Image Search (Lens)"
+    type and prices it at 3 credits per query.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+    email: support@serper.dev
+  termsOfService: https://serper.dev/terms
+  license:
+    name: Commercial
+    url: https://serper.dev
+  x-provenance:
+    method: derived
+    generated: '2026-08-13'
+    source: >-
+      https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js and
+      https://serper.dev/_next/static/chunks/2953-0ed5944c92d83408.js — Serper's own
+      first-party playground bundle. The type list adds {value:"lens"} for every user
+      (lensEnabled:true), the request builder emits {url, location, gl, hl, tbs} for
+      type "lens", and the credit calculator charges 3 credits for google + lens.
+    note: >-
+      Request shape taken verbatim from Serper's published client code. Serper publishes
+      no OpenAPI and the client bundle does not describe the response, so the 200 body is
+      left as a free-form object rather than invented.
+
+servers:
+  - url: https://google.serper.dev
+    description: Serper API server
+
+security:
+  - apiKeyHeader: []
+
+tags:
+  - name: Lens
+    description: Google Lens reverse image search
+
+paths:
+  /lens:
+    post:
+      operationId: lensSearch
+      summary: Lens (reverse image) search
+      description: >-
+        Run a Google Lens lookup against an image URL and receive structured visual
+        match results. Costs 3 credits per query.
+      tags:
+        - Lens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LensRequest'
+            example:
+              url: https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg
+              gl: us
+              hl: en
+      responses:
+        '200':
+          description: Lens results. Serper does not publish a response schema.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+components:
+  schemas:
+    LensRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the image to search with.
+        location:
+          type: string
+          description: >-
+            Canonical location string for where the search originates. Values come from
+            https://api.serper.dev/locations.
+        gl:
+          type: string
+          description: Country code (ISO 3166-1 alpha-2). Defaults to us.
+          default: us
+        hl:
+          type: string
+          description: Language code (ISO 639-1). Defaults to en.
+          default: en
+        tbs:
+          type: string
+          description: Time-based search filter, e.g. qdr:d for the past day.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+        statusCode:
+          type: integer
+          description: HTTP status code, repeated in the body.
+        error:
+          type: string
+          description: Short error label, present on some responses.
+  responses:
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: >-
+        Forbidden — missing or invalid API key. Observed body on an unauthenticated
+        request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-keys

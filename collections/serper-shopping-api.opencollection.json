@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete Shopping API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shopping",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Shopping Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/shopping",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Google Shopping search returning product listings with titles, prices, sources, delivery info, ratings, images, and product IDs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

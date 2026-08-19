@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "1177de8f-d57f-47f9-b1af-53fc37632d8f",
+      "name": "Patents",
+      "description": {
+        "content": "Patent search results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ca57d2be-7067-4324-848d-078a718d6e51",
+          "name": "Patents Search",
+          "request": {
+            "name": "Patents Search",
+            "description": {
+              "content": "Perform a Google Patents search returning patent records with titles, snippets, priority dates, filing dates, grant dates, inventors, assignees, publication numbers, and figure images.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "patents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q\": \"<string>\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10,\n  \"page\": 1,\n  \"tbs\": \"<string>\",\n  \"autocorrect\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0a19a26b-f309-4223-bc6d-4a8e003b97cd",
+              "name": "Successful patents search response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "patents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"machine learning neural network\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"searchParameters\": {\n    \"q\": \"string\",\n    \"gl\": \"string\",\n    \"hl\": \"string\",\n    \"type\": \"string\",\n    \"num\": 3209,\n    \"page\": 3434\n  },\n  \"organic\": [\n    {\n      \"title\": \"string\",\n      \"snippet\": \"string\",\n      \"link\": \"http://eSkcAugNfDdDb.uwakmdsw+9U88WPvrBK17G2nDK,\",\n      \"priorityDate\": \"2010-08-20\",\n      \"filingDate\": \"2010-08-07\",\n      \"grantDate\": \"1969-05-24\",\n      \"publicationDate\": \"1953-09-12\",\n      \"inventor\": \"string\",\n      \"assignee\": \"string\",\n      \"publicationNumber\": \"string\",\n      \"language\": \"string\",\n      \"thumbnailUrl\": \"https://GyFpIKEZbvoyxQjCDqbjnLV.kdtFHvYRzyTSd\",\n      \"pdfUrl\": \"http://rk.ghqrpNR6hGJpYyqPD4LCf.96eUkPq46jszZBPnEJ11\",\n      \"figures\": [\n        {\n          \"imageUrl\": \"http://BFKNSvBmc.ymtfOw+CTSta,b29A7iPIRj7NaB5wvN\",\n          \"thumbnailUrl\": \"http://AyENLKlctVGFVqQvCjQuovrIcojrggGm.ypcyBAdLqET\"\n        },\n        {\n          \"imageUrl\": \"https://uiRwBdEsCMHsADfVCyFNtTpuUJPqc.euIJ1e8IuE5ohRLUrF4aPvU2TW3dGn\",\n          \"thumbnailUrl\": \"http://JAntmAlZOsODPzCMAHFnRE.hhtlXYP8A8dxzTtUBRp4Dgy5AkbzgJm\"\n        }\n      ],\n      \"position\": 5641\n    },\n    {\n      \"title\": \"string\",\n      \"snippet\": \"string\",\n      \"link\": \"http://azM.rzmiG8lpQeM77kJqRIxmHYKhkwmOuKcn7sB1e,r\",\n      \"priorityDate\": \"1998-01-13\",\n      \"filingDate\": \"1996-12-15\",\n      \"grantDate\": \"1955-04-09\",\n      \"publicationDate\": \"2013-01-14\",\n      \"inventor\": \"string\",\n      \"assignee\": \"string\",\n      \"publicationNumber\": \"string\",\n      \"language\": \"string\",\n      \"thumbnailUrl\": \"https://PdpmPBrunktRRgeQCitgUTSC.ouJ.rz5JQeYfDxfCLIW\",\n      \"pdfUrl\": \"https://FVSedP.jpfJMK1boQFEfp0utHKBEjXvtr8j+XgjwLrTifL\",\n      \"figures\": [\n        {\n          \"imageUrl\": \"https://su.zstngDZUl1WK4KTEXxqsXeurEoRITfN.LICzuCdkfY6Ka3WY0ntZTPn,nBvL\",\n          \"thumbnailUrl\": \"https://zHzYWgbmYXBgTdnENaI.smXA8EegMinjbjHbSW-KQuclf.1T3QHuRXbxG-xIhv,gm1fWsPVBS,\"\n        },\n        {\n          \"imageUrl\": \"http://WHvwmVVkDZd.lbtIzbz8zTTw9Sd.lNGZf+lugJ7Q7Az6sESg8DIFrPeFrD\",\n          \"thumbnailUrl\": \"http://vvROZoBJQtUmneGZiDAPUYhjkejr.ltqlBJCmkrolaFGgD.qaP8vPAlS49dIYqv\"\n        }\n      ],\n      \"position\": 6278\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0d0321e-81a3-419d-940c-575ff33f1f07",
+              "name": "Bad request — missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "patents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"machine learning neural network\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcabb457-b2f4-456e-8c7a-b3706b4f7a5b",
+              "name": "Unauthorized — invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "patents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"machine learning neural network\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08a433b6-f9ee-485b-a625-4cc4e0a9a909",
+              "name": "Too many requests — rate limit exceeded or credits exhausted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "patents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"machine learning neural network\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://google.serper.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f3dfe477-df4a-431a-8fcb-2fb254aa9c2a",
+    "name": "Serper Google Search Autocomplete Patents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.\n\nContact Support:\n Name: Serper Support",
+      "type": "text/plain"
+    }
+  }
+}

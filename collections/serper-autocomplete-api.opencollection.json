@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Autocomplete",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Autocomplete",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/autocomplete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve Google search autocomplete suggestions for a given query string. Returns an ordered list of suggested search queries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

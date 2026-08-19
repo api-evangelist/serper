@@ -1,0 +1,141 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/ in this repo, conventions/serper-conventions.yml,
+  errors/serper-problem-types.yml, security/serper-domain-security.yml, plus searches of
+  https://serper.dev, /terms and /privacy for compliance claims (2026-08-13)
+name: Serper Conformance
+description: >-
+  Cross-cutting standards assertions for Serper. Serper is a thin, high-throughput SERP
+  proxy: it conforms to almost nothing beyond HTTPS and JSON, and it makes no published
+  compliance claim of any kind — no SOC 2, no ISO 27001, no GDPR/DPA page, no
+  subprocessor list, no trust center. That absence is the finding, not an oversight in
+  the search.
+
+conformance:
+  - id: https
+    name: TLS in transport
+    conforms: true
+    evidence: >-
+      TLSv1.3 on serper.dev and google.serper.dev; HSTS with max-age 63072000 on
+      serper.dev. See security/serper-domain-security.yml.
+
+  - id: openapi
+    name: OpenAPI published by the provider
+    conforms: false
+    evidence: >-
+      No OpenAPI at serper.dev/openapi.json (404), google.serper.dev/openapi.json (403
+      gateway), api.serper.dev/openapi.json, /swagger.json, /api-json, /api-docs, /docs
+      (all 404 from the NestJS router). Probed 2026-08-13. The definitions in this repo
+      are API Evangelist's, not Serper's.
+
+  - id: rest
+    name: REST / resource-oriented design
+    conforms: false
+    evidence: >-
+      RPC-over-POST. Every operation is a POST to a type-named path with a JSON body;
+      there are no resources, no GET semantics on the primary surface, and no HTTP
+      caching. Defensible for a search proxy, but it is not REST.
+
+  - id: rfc9457
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: >-
+      Errors are application/json with a flat {message, statusCode} envelope (and a
+      second, different {statusCode, message, error} envelope on api.serper.dev). No
+      application/problem+json, no type URI. See errors/serper-problem-types.yml.
+
+  - id: pagination
+    name: Documented pagination
+    conforms: partial
+    evidence: >-
+      Two styles coexist: page/num on the search family and an opaque nextPageToken
+      cursor on /reviews. Neither is documented in prose; both were read from Serper's
+      playground client. No Link headers.
+
+  - id: idempotency
+    name: Idempotency keys
+    conforms: false
+    evidence: >-
+      No idempotency header is published. All operations are reads, but each is billed,
+      so retries have a cost consequence with no deduplication mechanism.
+
+  - id: rate-limit-headers
+    name: RFC 9239 / draft RateLimit header fields
+    conforms: false
+    evidence: >-
+      No RateLimit-*, X-RateLimit-* or Retry-After header is published or observed. The
+      only exhaustion signal is HTTP 429.
+
+  - id: rfc8594
+    name: RFC 8594 Sunset / Deprecation headers
+    conforms: false
+    evidence: No deprecation policy and no Sunset or Deprecation header. See lifecycle/.
+
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: >-
+      Static API key only. /.well-known/oauth-authorization-server returns 404 on
+      serper.dev. No scopes exist, so scopes/ is intentionally absent from this repo.
+
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on serper.dev.
+
+  - id: mcp
+    name: Model Context Protocol
+    conforms: false
+    evidence: >-
+      No first-party MCP server, hosted or packaged. Every Serper MCP server on the
+      market is a third-party wrapper. See mcp/serper-mcp.yml.
+
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json both 404 on serper.dev and
+      403 on the gateway hosts. No card is published, so no a2a/ artifact exists.
+
+  - id: llmstxt
+    name: llms.txt
+    conforms: false
+    evidence: https://serper.dev/llms.txt returns 404 (probed 2026-08-13).
+
+  - id: asyncapi
+    name: AsyncAPI / event surface
+    conforms: not-applicable
+    evidence: >-
+      Serper has no webhooks, no streaming and no event surface — every interaction is a
+      synchronous request/response. Not a gap.
+
+  - id: soc2
+    name: SOC 2
+    conforms: false
+    evidence: No SOC 2 claim on serper.dev, /terms or /privacy. No trust center exists.
+
+  - id: iso27001
+    name: ISO/IEC 27001
+    conforms: false
+    evidence: No ISO 27001 claim published anywhere on Serper's public surface.
+
+  - id: gdpr
+    name: GDPR / DPA
+    conforms: unknown
+    evidence: >-
+      Serper publishes a privacy policy at https://serper.dev/privacy but no DPA,
+      subprocessor list, data-residency statement or GDPR compliance page was found.
+      Serper's robots.txt carries the EU DSM Article 4 reservation-of-rights boilerplate,
+      which is a copyright reservation, not a data-protection claim.
+
+  - id: pci
+    name: PCI DSS
+    conforms: not-applicable
+    evidence: >-
+      Serper does not handle card data directly; Paddle is the merchant of record for all
+      payments.
+
+certifications: []
+trust_center: null
+compliance_program_published: false

@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Serper Google Search Autocomplete Scholar API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scholar",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scholar Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://google.serper.dev/scholar",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a Google Scholar search returning academic publication results with titles, links, publication info, snippets, years, and citation counts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

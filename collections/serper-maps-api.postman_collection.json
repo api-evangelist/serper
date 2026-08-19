@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "cc6ead9c-9484-487b-b150-adb656fa6a3a",
+      "name": "Maps",
+      "description": {
+        "content": "Maps and location search",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d0a224f3-98b4-4dbf-a81c-e04d3526c134",
+          "name": "Maps Search",
+          "request": {
+            "name": "Maps Search",
+            "description": {
+              "content": "Perform a Google Maps search returning local business and place data with coordinates, ratings, addresses, and contact information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "maps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"q\": \"<string>\",\n  \"gl\": \"us\",\n  \"hl\": \"en\",\n  \"num\": 10,\n  \"page\": 1,\n  \"tbs\": \"<string>\",\n  \"autocorrect\": true,\n  \"ll\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1380f52-cdb3-4947-93c0-875d4807a49d",
+              "name": "Successful maps search response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"coffee shops\",\n  \"ll\": \"@40.7504178,-73.9824837,14z\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"searchParameters\": {\n    \"q\": \"string\",\n    \"gl\": \"string\",\n    \"hl\": \"string\",\n    \"type\": \"string\",\n    \"num\": 4261,\n    \"page\": 2343\n  },\n  \"ll\": \"string\",\n  \"places\": [\n    {\n      \"position\": 5633,\n      \"title\": \"string\",\n      \"address\": \"string\",\n      \"latitude\": 5173.783361370393,\n      \"longitude\": 6643.2186419740165,\n      \"rating\": 5131.066549460805,\n      \"ratingCount\": 6130,\n      \"type\": \"string\",\n      \"types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"website\": \"http://koAM.fciGqq9m7q1QGgIpqDt0wZb54hZ4Ih8u\",\n      \"phoneNumber\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"cid\": \"string\"\n    },\n    {\n      \"position\": 7473,\n      \"title\": \"string\",\n      \"address\": \"string\",\n      \"latitude\": 2765.818085461056,\n      \"longitude\": 7367.000318947466,\n      \"rating\": 4335.607396194321,\n      \"ratingCount\": 1213,\n      \"type\": \"string\",\n      \"types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"website\": \"https://TooSuuIQHkuy.jwwkgFcNyqWdy7cRn0TtWBfAC.t,tOiiN4Xqw25Vy\",\n      \"phoneNumber\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"cid\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c5babbc-95e0-4a6d-a05a-36cb77944105",
+              "name": "Bad request — missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"coffee shops\",\n  \"ll\": \"@40.7504178,-73.9824837,14z\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ba5c515-afc9-4159-8d88-c5e1d55965be",
+              "name": "Unauthorized — invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"coffee shops\",\n  \"ll\": \"@40.7504178,-73.9824837,14z\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4e4b55a-7c9d-42bc-9659-d61cc9392106",
+              "name": "Too many requests — rate limit exceeded or credits exhausted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"q\": \"coffee shops\",\n  \"ll\": \"@40.7504178,-73.9824837,14z\",\n  \"gl\": \"us\",\n  \"hl\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://google.serper.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3e77105f-263e-404b-a4d2-60fe97c16ad7",
+    "name": "Serper Google Search Autocomplete Maps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.\n\nContact Support:\n Name: Serper Support",
+      "type": "text/plain"
+    }
+  }
+}

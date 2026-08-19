@@ -1,0 +1,123 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live unauthenticated responses from google.serper.dev, scrape.serper.dev,
+  bing.serper.dev and api.serper.dev (2026-08-13), plus the 4xx responses declared in
+  openapi/ in this repo
+name: Serper Error Catalog
+description: >-
+  Serper does not implement RFC 9457 problem+json. Errors are returned as
+  application/json with a flat envelope. Two distinct envelopes are in production and
+  they disagree with each other: the API gateway in front of the search and scrape hosts
+  returns {"message": ..., "statusCode": ...}, while the platform host api.serper.dev
+  returns {"statusCode": ..., "message": ..., "error": ...}. Serper publishes no error
+  reference page, so remediation text below is derived from observed behaviour and from
+  Serper's published FAQ on credits.
+
+format: custom-json
+content_type: application/json
+rfc9457: false
+
+envelope:
+  variants:
+    - name: gateway
+      hosts:
+        - google.serper.dev
+        - scrape.serper.dev
+        - bing.serper.dev
+      fields:
+        - name: message
+          type: string
+        - name: statusCode
+          type: integer
+      example: '{"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
+      observed: '2026-08-13'
+    - name: platform
+      hosts:
+        - api.serper.dev
+      fields:
+        - name: statusCode
+          type: integer
+        - name: message
+          type: string
+        - name: error
+          type: string
+      example: '{"statusCode":404,"message":"Cannot GET /openapi.json","error":"Not Found"}'
+      observed: '2026-08-13'
+  note: >-
+    There is no machine-readable error code, no type URI and no request/trace identifier
+    in either envelope. A client cannot distinguish "bad key" from "no key" from
+    "credits exhausted" other than by string-matching `message`.
+
+problem_types:
+  - status: 400
+    title: Bad Request
+    detail: Missing or invalid parameters in the request body.
+    remediation: >-
+      Check required fields for the endpoint — `q` for the search family, `url` for
+      /lens and the scrape host, and one of cid/fid/placeId for /reviews.
+    method: derived
+    source: openapi/
+
+  - status: 401
+    title: Unauthorized
+    detail: Missing or invalid API key.
+    remediation: >-
+      Send a valid key in the X-API-KEY header (or as the `apiKey` query parameter on a
+      GET). Keys are managed at https://serper.dev/api-keys.
+    method: derived
+    source: openapi/
+    note: >-
+      Declared as 401 in the specs in this repo, but the live gateway returns 403 for an
+      unauthenticated call. Treat 403 as the authoritative status.
+
+  - status: 403
+    title: Unauthorized. Sign up for a free account.
+    detail: >-
+      Returned by the API gateway for any request without a valid API key, on any path.
+      The gateway does not route unauthenticated requests, so this status is also what a
+      probe of a non-existent path returns.
+    remediation: >-
+      Obtain a key at https://serper.dev (2,500 free credits, no credit card) and send it
+      as X-API-KEY.
+    method: probed
+    source: https://google.serper.dev/ (observed 2026-08-13)
+
+  - status: 404
+    title: Not Found
+    detail: No route matches the requested method and path on api.serper.dev.
+    remediation: Check the path; api.serper.dev exposes /locations and /health.
+    method: probed
+    source: https://api.serper.dev/openapi.json (observed 2026-08-13)
+
+  - status: 429
+    title: Too Many Requests
+    detail: >-
+      The account's queries-per-second concurrency limit was exceeded, or the credit
+      balance has reached zero.
+    remediation: >-
+      Back off and retry. Concurrency scales with the purchased tier (50 QPS Starter to
+      300 QPS Ultimate; higher available on request). If the balance is zero, top up —
+      Serper stops accepting new queries at zero credits.
+    method: derived
+    source: openapi/ + https://serper.dev FAQ
+
+    note: >-
+      Serper publishes no Retry-After or RateLimit-* header contract; see
+      rate-limits/serper-rate-limits.yml.
+
+  - status: 500
+    title: Server Error
+    detail: >-
+      Not declared in any spec and not observed. Serper's status page records incidents
+      of "Elevated Latency and Error Rates Across APIs", so 5xx responses do occur.
+    remediation: Retry with backoff; check https://serper.betteruptime.com.
+    method: derived
+    source: https://serper.betteruptime.com
+
+billing_semantics:
+  note: >-
+    Credits are deducted only on successful responses — Serper's FAQ states "Every time
+    you receive successful responses to queries, we will deduct credits from your account
+    balance." Errored requests therefore do not consume credits, which makes retry-on-
+    error cost-free but does not make retry-on-timeout cost-free.

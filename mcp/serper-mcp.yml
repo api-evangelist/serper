@@ -1,0 +1,122 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/ in this repo, plus searches of npm, PyPI, mcp.so, pulsemcp.com and
+  serper.dev's own site for a first-party MCP server, 2026-08-13
+name: Serper MCP
+description: >-
+  Serper ships NO MCP server of its own — no hosted endpoint, no published package, no
+  mention of MCP anywhere on serper.dev. The tool list below is a CANDIDATE derived from
+  the OpenAPI definitions in this repo, not something Serper publishes. Every MCP server
+  that exposes Serper today is a third-party wrapper around Serper's REST API, installed
+  and run by the end user with their own API key.
+
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+  note: >-
+    mode is `none` because Serper publishes neither a remote MCP endpoint nor a
+    first-party stdio package. `auth: api-key` records how any Serper-backed MCP server
+    must authenticate (X-API-KEY header, user-supplied key), not that Serper operates
+    one. Serper's own footer links a Jan AI MCP example page
+    (https://jan.ai/docs/mcp-examples/search/serper) which returned HTTP 404 when probed
+    2026-08-13 — Serper points at MCP but does not operate the server behind the link.
+
+status: candidate
+
+surfaces:
+  rest:
+    base_urls:
+      - https://google.serper.dev
+      - https://scrape.serper.dev
+      - https://api.serper.dev
+    auth: X-API-KEY header
+    openapi: openapi/ (14 definitions in this repo; Serper publishes none itself)
+  mcp: null
+  graphql: null
+
+tools:
+  - name: web_search
+    description: Run a Google web search and return organic results, knowledge graph, answer box, people-also-ask and related searches.
+    rest: [webSearch]
+    openapi: openapi/serper-search-api-openapi.yml
+  - name: image_search
+    description: Search Google Images and return structured image results.
+    rest: [imageSearch]
+    openapi: openapi/serper-images-api-openapi.yml
+  - name: video_search
+    description: Search Google Videos.
+    rest: [videoSearch]
+    openapi: openapi/serper-videos-api-openapi.yml
+  - name: news_search
+    description: Search Google News.
+    rest: [newsSearch]
+    openapi: openapi/serper-news-api-openapi.yml
+  - name: places_search
+    description: Search Google for local businesses and places.
+    rest: [placesSearch]
+    openapi: openapi/serper-places-api-openapi.yml
+  - name: maps_search
+    description: Search Google Maps by query, lat/long, placeId or cid.
+    rest: [mapsSearch]
+    openapi: openapi/serper-maps-api-openapi.yml
+  - name: place_reviews
+    description: Retrieve Google reviews for a place, paginated by nextPageToken.
+    rest: [placeReviews]
+    openapi: openapi/serper-reviews-api-openapi.yml
+  - name: shopping_search
+    description: Search Google Shopping for products.
+    rest: [shoppingSearch]
+    openapi: openapi/serper-shopping-api-openapi.yml
+  - name: scholar_search
+    description: Search Google Scholar for academic publications.
+    rest: [scholarSearch]
+    openapi: openapi/serper-scholar-api-openapi.yml
+  - name: patents_search
+    description: Search Google Patents.
+    rest: [patentsSearch]
+    openapi: openapi/serper-patents-api-openapi.yml
+  - name: autocomplete
+    description: Return Google autocomplete suggestions for a query prefix.
+    rest: [autocomplete]
+    openapi: openapi/serper-autocomplete-api-openapi.yml
+  - name: lens_search
+    description: Reverse image search with Google Lens from an image URL.
+    rest: [lensSearch]
+    openapi: openapi/serper-lens-api-openapi.yml
+  - name: scrape_webpage
+    description: Fetch and extract a webpage's contents, optionally as markdown with images, links and videos.
+    rest: [scrapeWebpage]
+    openapi: openapi/serper-webpage-scrape-api-openapi.yml
+  - name: list_locations
+    description: Look up the canonical location strings accepted by the `location` parameter.
+    rest: [listLocations]
+    openapi: openapi/serper-locations-api-openapi.yml
+
+third_party_servers_note: >-
+  Recorded for completeness. NONE of these are operated or endorsed by Serper, and none
+  should be read as a Serper agent surface. All are local-stdio and require the user to
+  supply their own Serper API key.
+
+third_party_servers:
+  - name: serper-mcp-server
+    author: garylab (Gary Meng)
+    repository: https://github.com/garylab/serper-mcp-server
+    package: https://pypi.org/project/serper-mcp-server/
+    mode: local-stdio
+    version: 0.0.10
+    published: '2025-11-10'
+  - name: mcp-server-serper
+    author: marcopesani
+    repository: https://github.com/marcopesani/mcp-server-serper
+    mode: local-stdio
+    note: TypeScript server covering search and webpage scraping.
+  - name: Serper-search-mcp
+    author: NightTrek
+    repository: https://github.com/NightTrek/Serper-search-mcp
+    mode: local-stdio
+    note: Self-described as "un-official".

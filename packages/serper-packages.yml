@@ -1,0 +1,95 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, github.com/Serper-API, and the serper.dev footer
+  integration links (CrewAI, LangChain, Haystack, Jan AI), probed 2026-08-13
+name: Serper Packages
+description: >-
+  Serper publishes NO first-party client library on any package registry. Every package
+  and integration below is third-party. Serper's own site does not link an SDK section —
+  its footer links four third-party framework integrations (CrewAI, LangChain, Haystack,
+  Jan AI) instead, and its GitHub organisation (github.com/Serper-API) contains only
+  forks of unrelated AI projects with no Serper client code. Integration is expected to
+  be a direct HTTPS call with an X-API-KEY header.
+
+summary:
+  official_count: 0
+  third_party_count: 2
+  registries_checked:
+    - npm
+    - PyPI
+    - RubyGems
+    - crates.io
+    - pkg.go.dev
+    - Maven Central
+    - NuGet
+    - Packagist
+  first_party_sdk: false
+
+packages:
+  - name: serper
+    registry: npm
+    url: https://www.npmjs.com/package/serper
+    repository: https://github.com/TKDKid1000/serper
+    language: javascript
+    official: false
+    version: 1.0.6
+    published: '2023-11-01'
+    description: A client for the Serper Google Search API.
+    note: >-
+      Published by npm user tkdkid1000, not by Serper. Last release 2023-11-01 —
+      it predates the lens, reviews and webpage-scrape surfaces Serper has since shipped,
+      so it cannot reach them.
+
+  - name: serper-mcp-server
+    registry: pypi
+    url: https://pypi.org/project/serper-mcp-server/
+    repository: https://github.com/garylab/serper-mcp-server
+    language: python
+    official: false
+    version: 0.0.10
+    published: '2025-11-10'
+    description: A Model Context Protocol server exposing Serper Google Search as MCP tools.
+    note: >-
+      Published by garylab (Gary Meng), not by Serper. Installed locally via uvx/pip and
+      run over stdio; requires the user's own SERPER_API_KEY. See mcp/serper-mcp.yml.
+
+absent:
+  - registry: npm
+    checked:
+      - serper-api
+      - serper-sdk
+      - serper-js
+      - "@serper/sdk"
+      - node-serper
+      - google-serper
+    result: 404 — no package published under any of these names
+  - registry: pypi
+    checked:
+      - serper
+      - serper-dev
+      - serper-python
+      - google-serper
+      - serper-python-client
+    result: 404 — no package published under any of these names
+
+framework_integrations_note: >-
+  Linked by Serper from its own site footer. These are search-tool wrappers maintained
+  by the framework, not Serper client libraries, so they are not counted as SDKs.
+
+framework_integrations:
+  - name: CrewAI SerperDevTool
+    url: https://docs.crewai.com/en/tools/search-research/serperdevtool
+    maintainer: CrewAI
+  - name: LangChain GoogleSerperAPIWrapper
+    url: https://python.langchain.com/docs/integrations/tools/google_serper
+    maintainer: LangChain
+  - name: Haystack SerperDevWebSearch
+    url: https://docs.haystack.deepset.ai/docs/serperdevwebsearch
+    maintainer: deepset / Haystack
+  - name: Jan AI MCP example
+    url: https://jan.ai/docs/mcp-examples/search/serper
+    maintainer: Jan AI
+    note: >-
+      Linked from serper.dev's footer; the page itself returned HTTP 404 when probed
+      2026-08-13, so the Serper footer carries a dead integration link.

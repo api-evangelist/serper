@@ -1,0 +1,172 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://serper.dev (pricing + FAQ), Serper's own playground bundle
+  https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js, and live
+  probes of google.serper.dev / scrape.serper.dev / api.serper.dev on 2026-08-13
+name: Serper API Conventions
+description: >-
+  Cross-cutting runtime semantics for Serper's APIs. Serper publishes no reference
+  documentation site — the entire contract is expressed through an interactive playground
+  that requires a login to use, so these conventions were reconstructed from Serper's own
+  published client code plus its public FAQ and live responses.
+
+request:
+  style: RPC-over-POST
+  transport: HTTPS
+  default_method: POST
+  content_type: application/json
+  body: >-
+    A single JSON object of query parameters. The endpoint path selects the search type
+    (/search, /images, /videos, /news, /places, /maps, /reviews, /shopping, /scholar,
+    /patents, /autocomplete, /lens); the scrape surface is a POST to the root of
+    scrape.serper.dev.
+  get_alternative:
+    supported: true
+    note: >-
+      Serper's playground can emit the same call as a GET with every body field promoted
+      to a query parameter and the key passed as `apiKey` in the query string instead of
+      the X-API-KEY header. This is a real second calling convention and it puts the API
+      key in the URL — it will be logged by proxies and browser history. Prefer POST with
+      the header.
+    source: playground request builder (d.addQueryParams([{key:"apiKey",value:a}]))
+  batching:
+    supported: true
+    name: mini-batch
+    shape: >-
+      Send an ARRAY of query objects instead of a single object to the same endpoint.
+    max_items: 100
+    cost: 3x the per-query credit cost of the equivalent single query
+    unsupported_on:
+      - reviews
+      - product-reviews
+    source: >-
+      playground "Mini-batch (up to 100 queries)" toggle and its credit calculator
+      (a && (e *= 3))
+
+authentication:
+  style: api-key
+  header: X-API-KEY
+  query_param: apiKey
+  scheme: static key, no expiry, no rotation policy published
+  oauth2: false
+  see: authentication/serper-authentication.yml
+
+pagination:
+  styles:
+    - name: page/num
+      applies_to:
+        - /search
+        - /images
+        - /videos
+        - /news
+        - /places
+        - /shopping
+        - /scholar
+        - /patents
+        - /maps
+      params:
+        - name: page
+          type: integer
+          default: 1
+        - name: num
+          type: integer
+          default: 10
+          note: >-
+            Allowed values are per-endpoint, not free-form. Serper's playground offers
+            10 for search/videos/patents, 10 or 100 for images, and 40 for shopping;
+            `num` is dropped entirely for scholar and for autocomplete.
+      cost_effect: >-
+        num > 10 on Google Images doubles the credit cost. Requesting more results is a
+        billing decision, not just a paging decision.
+    - name: cursor
+      applies_to:
+        - /reviews
+      params:
+        - name: nextPageToken
+          type: string
+      note: Opaque cursor returned by the previous response.
+  no_link_headers: true
+
+localization:
+  params:
+    - name: gl
+      description: Country code (ISO 3166-1 alpha-2).
+      default: us
+    - name: hl
+      description: Language code (ISO 639-1).
+      default: en
+    - name: location
+      description: >-
+        Canonical location string for finer-grained origin (city, neighborhood). Values
+        are enumerated by GET https://api.serper.dev/locations?q=<term>&limit=25, which
+        answers unauthenticated.
+  note: >-
+    Serper's client omits gl and hl from the wire when they equal the defaults, so an
+    absent field means "us"/"en", not "unset".
+
+filtering:
+  - name: tbs
+    description: >-
+      Google time-based search filter, passed straight through — qdr:h (past hour),
+      qdr:d, qdr:w, qdr:m, qdr:y.
+  - name: autocorrect
+    description: Enable Google's query autocorrection. Default true.
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Serper publishes no idempotency key, and none is needed in the usual sense — every
+    operation is a read. But every call is BILLED, so a naive retry is not free of
+    consequence even though it is free of side effects on Serper's data. There is no
+    request identifier to deduplicate against.
+
+versioning:
+  scheme: none
+  in_url: false
+  in_header: false
+  note: >-
+    No version segment appears in any Serper URL, no version header is documented, and no
+    version field appears in any response. See lifecycle/serper-lifecycle.yml.
+
+tracing:
+  request_id: false
+  note: >-
+    No X-Request-Id / X-Correlation-Id is documented or returned. An agent cannot cite a
+    request identifier when reporting a problem to support@serper.dev.
+
+rate_limits:
+  signalled_by: none
+  headers: []
+  status_on_exhaustion: 429
+  note: >-
+    Limits are per-account queries-per-second tied to the purchased tier. Serper
+    publishes no RateLimit-*, X-RateLimit-* or Retry-After contract. See
+    rate-limits/serper-rate-limits.yml.
+
+errors:
+  envelope: '{"message": string, "statusCode": integer}'
+  platform_envelope: '{"statusCode": integer, "message": string, "error": string}'
+  rfc9457: false
+  see: errors/serper-problem-types.yml
+
+metering:
+  unit: credit
+  deducted_on: successful responses only
+  returned_in_response: >-
+    For the webpage scrape surface, Serper states "The number of credits used is returned
+    in the response." No credit field is documented for the search surfaces.
+  cost_table: rate-limits/serper-rate-limits.yml
+
+caching:
+  provider_side: none
+  note: >-
+    Serper's FAQ states "we do not cache anything so the returned response will reflect
+    the latest SERP results of Google." Client-side caching is therefore the consumer's
+    responsibility and is the single largest cost lever — see finops/serper-finops.yml.
+
+latency:
+  typical: 1-2s
+  worst_case: 2-4s when Serper retries against Google
+  source: https://serper.dev FAQ

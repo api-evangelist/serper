@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://serper.dev (FAQ + footer), https://serper.betteruptime.com,
+  https://status.serper.dev, https://serper.dev/terms, and the OpenAPI definitions in
+  this repo — probed 2026-08-13
+name: Serper Lifecycle
+description: >-
+  Serper publishes an operational status page and a refund policy, but no API versioning
+  policy, no deprecation policy, no Sunset/Deprecation header contract, no changelog and
+  no SLA outside the Ultimate tier's marketing copy. Consumers get no advance notice
+  mechanism for a breaking change.
+
+versioning:
+  scheme: none
+  documented: false
+  url_versioning: false
+  header_versioning: false
+  detail: >-
+    No Serper endpoint carries a version segment, and no version header or response field
+    is published. A change to a response shape would reach every consumer at once.
+
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  detail: >-
+    No deprecation policy is published and no operation in any definition in this repo is
+    marked deprecated. Note that Serper's own playground gates several types behind an
+    @serper.dev email address (product-reviews, maps-autocomplete, bing-search,
+    bing-images, search-full, serper-search) — those are pre-release, not deprecated, and
+    are deliberately excluded from this profile.
+
+changelog:
+  published: false
+  url: null
+  detail: >-
+    Serper maintains no dated changelog. The closest first-party surface is a Medium
+    reading list linked from the footer
+    (https://medium.com/@serper/list/articles-3f700b49cbc4), which returned HTTP 403
+    behind Cloudflare when probed on 2026-08-13 and is a marketing feed rather than a
+    change record.
+
+status_page:
+  published: true
+  url: https://serper.betteruptime.com
+  provider: Better Stack
+  status: 200
+  components:
+    - name: API
+      uptime_90d: 99.885%
+    - name: Management Portal
+      uptime_90d: 99.996%
+  incident_history: true
+  most_recent_incident:
+    title: Elevated Latency and Error Rates Across APIs
+    resolved: '2026-08-10'
+  broken_alias:
+    host: status.serper.dev
+    status: 302
+    redirects_to: https://www.statuspage.io
+    detail: >-
+      A status.serper.dev subdomain resolves but is an unconfigured Atlassian Statuspage
+      that 302s visitors to the Statuspage marketing site. The working status page is the
+      Better Stack one above. Anyone guessing the conventional subdomain lands nowhere.
+
+sla:
+  published: false
+  detail: >-
+    Serper's pricing page advertises no uptime SLA on any tier. The Ultimate tier's
+    marketing copy references dedicated capacity and custom concurrency on request, but
+    no numeric availability commitment or credit-back term is published.
+
+support:
+  email: support@serper.dev
+  general_email: hello@serper.dev
+  billing: assist@paddle.com (Paddle is Serper's merchant of record)
+  ticketing: none published
+  detail: Support is email-only; there is no public help center, forum or issue tracker.
+
+commercial_terms:
+  terms_of_service: https://serper.dev/terms
+  privacy_policy: https://serper.dev/privacy
+  cookie_policy: https://serper.dev/cookies
+  credit_expiry: 6 months from purchase
+  refund_policy: >-
+    Full refund within 7 days of the initial credit purchase, unless more than 20% of the
+    credits have been used.
+  payment_methods:
+    - Visa
+    - Mastercard
+    - American Express
+    - Discover
+    - PayPal
+  source: https://serper.dev FAQ
