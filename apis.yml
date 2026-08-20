@@ -28,6 +28,29 @@ tags:
 - Search
 - SERP
 - Google Search
+- Artificial Intelligence
+- LLM
+- SEO
+- Image
+- News
+- Maps
+- Shopping
+- Reviews
+- Lens
+- Scraping
+- Locations
+- SERP API
+- Web Search
+- Agents
+- Patents
+- Scholar
+- Autocomplete
+- Places
+- Videos
+tags_raw:
+- Search
+- SERP
+- Google Search
 - AI
 - LLM
 - SEO
@@ -68,6 +91,8 @@ apis:
   humanURL: https://serper.dev
   baseURL: https://google.serper.dev
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
