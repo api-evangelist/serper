@@ -7,5 +7,17 @@
       "type": "Website",
       "url": "https://serper.dev"
     }
-  ]
+  ],
+  "repo": "serper",
+  "feeds": [
+    {
+      "source": "https://serper.dev/cookies",
+      "feed_url": "https://serper.dev/cookies",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-22T20:20:02Z"
 }
