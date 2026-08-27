@@ -103,8 +103,9 @@ apis:
     url: https://serper.dev
 - aid: serper:serper-lens-api
   name: Serper Lens API
-  description: Google Lens reverse image search from an image URL. Exposed to every playground user; costs
-    3 credits per query.
+  description: >-
+    Google Lens reverse image search from an image URL. Exposed to every playground user; costs 3 credits
+    per query.
   humanURL: https://serper.dev/playground
   baseURL: https://google.serper.dev
   tags:
@@ -120,8 +121,9 @@ apis:
     url: https://serper.dev/playground
 - aid: serper:serper-locations-api
   name: Serper Locations API
-  description: Canonical Google geo-target lookup for the location parameter used by every Serper search
-    endpoint, plus a service health check. The only Serper surface that answers unauthenticated.
+  description: >-
+    Canonical Google geo-target lookup for the location parameter used by every Serper search endpoint,
+    plus a service health check. The only Serper surface that answers unauthenticated.
   humanURL: https://api.serper.dev/locations
   baseURL: https://api.serper.dev
   tags:
@@ -193,8 +195,9 @@ apis:
     url: https://serper.dev
 - aid: serper:serper-reviews-api
   name: Serper Reviews API
-  description: Google place reviews by cid, fid or placeId, cursor-paginated with nextPageToken. The only
-    Serper endpoint that uses cursor pagination and the only one where mini-batch is unsupported.
+  description: >-
+    Google place reviews by cid, fid or placeId, cursor-paginated with nextPageToken. The only Serper
+    endpoint that uses cursor pagination and the only one where mini-batch is unsupported.
   humanURL: https://serper.dev/playground
   baseURL: https://google.serper.dev
   tags:
@@ -264,25 +267,21 @@ apis:
     url: overlays/serper-videos-api-overlay.yaml
   - type: Documentation
     url: https://serper.dev
-- aid: serper:serper-webpage-scrape-api
-  name: Serper Webpage Scrape API
-  description: Fetch and extract the contents of a URL, optionally as markdown with images, links and
-    videos. Served from a separate host and priced per difficulty at 2, 6 or 10 credits, with the credits
-    consumed returned in the response.
-  humanURL: https://serper.dev/playground
-  baseURL: https://scrape.serper.dev
+- aid: serper:serper-scrape-api
+  name: Serper Scrape API
+  description: Webpage content extraction
+  humanURL: https://serper.dev
+  baseURL: https://google.serper.dev
   tags:
-  - Scraping
-  - Markdown
-  - Content Extraction
+  - Scrape
   properties:
   - type: OpenAPI
-    url: openapi/serper-webpage-scrape-api-openapi.yml
-  - type: Overlay
-    url: overlays/serper-webpage-scrape-api-overlay.yaml
+    url: openapi/serper-scrape-api-openapi.yml
   - type: Documentation
     url: https://serper.dev/playground
 common:
+- type: Overlay
+  url: overlays/serper-webpage-scrape-api-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/serper-agentic-access.yml
 - type: DomainSecurity
