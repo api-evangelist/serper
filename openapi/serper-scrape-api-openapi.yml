@@ -1,0 +1,117 @@
+openapi: 3.2.0
+info:
+  title: Serper Webpage Scrape API
+  description: Serper's webpage scraping surface. A single POST to the host root returns the extracted contents of a URL, optionally as markdown and with images, links and videos included. Serper's own playground states that most webpages cost 2 credits, with harder-to-scrape pages costing 6 or 10 credits depending on difficulty, and that the number of credits consumed is returned in the response body.
+  version: 1.0.0
+  contact:
+    name: Serper Support
+    url: https://serper.dev
+    email: support@serper.dev
+  termsOfService: https://serper.dev/terms
+  license:
+    name: Commercial
+    url: https://serper.dev
+  x-provenance:
+    method: derived
+    generated: '2026-08-13'
+    source: https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js — Serper's own first-party playground bundle, which routes type "webpage" to https://scrape.serper.dev and builds the request body {url, includeMarkdown, includeImages, includeLinks, includeVideos}.
+    note: Request shape is taken verbatim from Serper's published client code. Serper publishes no OpenAPI, and the response schema is not described in the client bundle, so the 200 response is left as a free-form object rather than invented.
+servers:
+- url: https://scrape.serper.dev
+  description: Serper webpage scrape host
+security:
+- apiKeyHeader: []
+tags:
+- name: Scrape
+  description: Webpage content extraction
+paths:
+  /:
+    post:
+      operationId: scrapeWebpage
+      summary: Scrape a webpage
+      description: Fetch and extract the contents of a single URL. Optional flags control whether markdown, images, links and videos are included in the response.
+      tags:
+      - Scrape
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScrapeRequest'
+            example:
+              url: https://apievangelist.com
+              includeMarkdown: true
+      responses:
+        '200':
+          description: Extracted page contents. Serper does not publish a response schema for this endpoint; the playground renders a MARKDOWN tab when `markdown` is present, and the credits consumed are returned in the response.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ScrapeRequest:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL of the webpage to scrape.
+        includeMarkdown:
+          type: boolean
+          description: Include a markdown rendering of the page contents.
+        includeImages:
+          type: boolean
+          description: Include images extracted from the page.
+        includeLinks:
+          type: boolean
+          description: Include links extracted from the page.
+        includeVideos:
+          type: boolean
+          description: Include videos extracted from the page.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+        statusCode:
+          type: integer
+          description: HTTP status code, repeated in the body.
+        error:
+          type: string
+          description: Short error label, present on some responses.
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key obtained from https://serper.dev/api-keys
