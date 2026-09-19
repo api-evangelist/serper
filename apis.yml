@@ -50,7 +50,7 @@ tags:
 - Reviews
 - Lens
 - Scraping
-- Locations
+- Location
 - SERP API
 - Web Search
 - Agents
@@ -58,7 +58,7 @@ tags:
 - Scholar
 - Autocomplete
 - Places
-- Videos
+- Video
 tags_raw:
 - Search
 - SERP
@@ -139,6 +139,10 @@ apis:
   humanURL: https://api.serper.dev/locations
   baseURL: https://api.serper.dev
   tags:
+  - Location
+  - Geo
+  - Reference Data
+  tags_raw:
   - Locations
   - Geo
   - Reference Data
@@ -271,6 +275,8 @@ apis:
   humanURL: https://serper.dev
   baseURL: https://google.serper.dev
   tags:
+  - Video
+  tags_raw:
   - Videos
   properties:
   - type: OpenAPI
