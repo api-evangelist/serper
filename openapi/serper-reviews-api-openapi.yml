@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Serper Reviews API
-  description: >-
-    Google place reviews. Retrieve reviews for a place identified by cid, fid or
-    placeId, with sorting and topic filtering, paginated by an opaque nextPageToken.
-    Serper's own playground exposes this as the "Reviews" type and prices it at
-    1 credit per query.
+  description: Google place reviews. Retrieve reviews for a place identified by cid, fid or placeId, with sorting and topic filtering, paginated by an opaque nextPageToken. Serper's own playground exposes this as the "Reviews" type and prices it at 1 credit per query.
   version: 1.0.0
   contact:
     name: Serper Support
@@ -18,41 +14,24 @@ info:
   x-provenance:
     method: derived
     generated: '2026-08-13'
-    source: >-
-      https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js and
-      https://serper.dev/_next/static/chunks/2953-0ed5944c92d83408.js — Serper's own
-      first-party playground bundle. The type list adds {value:"reviews"} for every user
-      (reviewsEnabled:true), the request builder emits
-      {cid, fid, placeId, gl, hl, sortBy, topicId, nextPageToken} for type "reviews",
-      and the credit calculator charges 1 credit for google + reviews.
-    note: >-
-      Request shape taken verbatim from Serper's published client code. Serper publishes
-      no OpenAPI and the client bundle does not describe the response, so the 200 body is
-      left as a free-form object rather than invented. The "Product Reviews"
-      (product-reviews) type in the same bundle is gated to @serper.dev accounts and is
-      therefore NOT described here.
-
+    source: https://serper.dev/_next/static/chunks/pages/playground-7ce8960e9fe2fc99.js and https://serper.dev/_next/static/chunks/2953-0ed5944c92d83408.js — Serper's own first-party playground bundle. The type list adds {value:"reviews"} for every user (reviewsEnabled:true), the request builder emits {cid, fid, placeId, gl, hl, sortBy, topicId, nextPageToken} for type "reviews", and the credit calculator charges 1 credit for google + reviews.
+    note: Request shape taken verbatim from Serper's published client code. Serper publishes no OpenAPI and the client bundle does not describe the response, so the 200 body is left as a free-form object rather than invented. The "Product Reviews" (product-reviews) type in the same bundle is gated to @serper.dev accounts and is therefore NOT described here.
 servers:
-  - url: https://google.serper.dev
-    description: Serper API server
-
+- url: https://google.serper.dev
+  description: Serper API server
 security:
-  - apiKeyHeader: []
-
+- apiKeyHeader: []
 tags:
-  - name: Reviews
-    description: Google place reviews
-
+- name: Reviews
+  description: Google place reviews
 paths:
   /reviews:
     post:
       operationId: placeReviews
       summary: Place reviews
-      description: >-
-        Retrieve Google reviews for a place. Identify the place by cid, fid or placeId.
-        Costs 1 credit per query.
+      description: Retrieve Google reviews for a place. Identify the place by cid, fid or placeId. Costs 1 credit per query.
       tags:
-        - Reviews
+      - Reviews
       requestBody:
         required: true
         content:
@@ -78,9 +57,39 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/TooManyRequests'
-
 components:
+  responses:
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+        statusCode:
+          type: integer
+          description: HTTP status code, repeated in the body.
+        error:
+          type: string
+          description: Short error label, present on some responses.
     ReviewsRequest:
       type: object
       properties:
@@ -103,50 +112,13 @@ components:
           default: en
         sortBy:
           type: string
-          description: >-
-            Review sort order. The playground's default selection is "mostRelevant".
+          description: Review sort order. The playground's default selection is "mostRelevant".
         topicId:
           type: string
           description: Filter reviews to a Google-assigned review topic.
         nextPageToken:
           type: string
-          description: >-
-            Opaque cursor returned by a previous call; pass it to fetch the next page.
-            The reviews endpoint uses cursor pagination rather than the page/num
-            pagination used by the search endpoints.
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error description.
-        statusCode:
-          type: integer
-          description: HTTP status code, repeated in the body.
-        error:
-          type: string
-          description: Short error label, present on some responses.
-  responses:
-    BadRequest:
-      description: Bad request — missing or invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: >-
-        Forbidden — missing or invalid API key. Observed body on an unauthenticated
-        request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+          description: Opaque cursor returned by a previous call; pass it to fetch the next page. The reviews endpoint uses cursor pagination rather than the page/num pagination used by the search endpoints.
   securitySchemes:
     apiKeyHeader:
       type: apiKey

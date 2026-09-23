@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Serper Google Search Autocomplete API
   description: RESTful API providing real-time Google Search Engine Results Page (SERP) data in structured JSON format. Supports web search, image search, news, maps, places, videos, shopping, scholar, patents, and autocomplete via POST endpoints. Authentication uses an X-API-KEY header. Designed for high-throughput AI and LLM applications with up to 300 queries per second.
@@ -55,13 +55,26 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    AutocompleteSuggestion:
-      type: object
-      properties:
-        value:
-          type: string
-          description: Autocomplete suggestion text.
     AutocompleteResponse:
       type: object
       properties:
@@ -70,12 +83,12 @@ components:
           description: List of autocomplete suggestions.
           items:
             $ref: '#/components/schemas/AutocompleteSuggestion'
-    ErrorResponse:
+    AutocompleteSuggestion:
       type: object
       properties:
-        message:
+        value:
           type: string
-          description: Human-readable error description.
+          description: Autocomplete suggestion text.
     AutocompleteRequest:
       type: object
       required:
@@ -95,25 +108,12 @@ components:
           description: Language code for results (ISO 639-1).
           example: en
           default: en
-  responses:
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — missing or invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
   securitySchemes:
     apiKeyHeader:
       type: apiKey

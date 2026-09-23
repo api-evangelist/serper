@@ -1,0 +1,31 @@
+# Front Door AI Index — serper — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: serper
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: serper.dev
+  final_host: serper.dev
+  ownership: own
+  owner: serper
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 8
+  host_score: 8
+  density: 1.17
+  words: 6846
+  tiers:
+    agentic: 2
+    core: 4
+    model: 2
+  ambiguous: 1
+  top_terms:
+    AI: 2
+    transformer: 2
+    agent: 1
+    chatbot: 1
+    large language model: 1
+    machine learning: 1
+    prompts: 1

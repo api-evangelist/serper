@@ -1,16 +1,11 @@
 {
   "provider": "serper",
   "sources": [
-    "serper-autocomplete-api-openapi.yml",
-    "serper-images-api-openapi.yml",
-    "serper-maps-api-openapi.yml",
-    "serper-news-api-openapi.yml",
-    "serper-patents-api-openapi.yml",
-    "serper-places-api-openapi.yml",
-    "serper-scholar-api-openapi.yml",
-    "serper-search-api-openapi.yml",
-    "serper-shopping-api-openapi.yml",
-    "serper-videos-api-openapi.yml"
+    "_original/serper-google-search-api-openapi.yml",
+    "_original/serper-webpage-scrape-api-openapi.yml",
+    "serper-lens-api-openapi.yml",
+    "serper-locations-api-openapi.yml",
+    "serper-reviews-api-openapi.yml"
   ],
   "outputs": [
     "serper-autocomplete-api-openapi.yml",
@@ -22,11 +17,36 @@
     "serper-scholar-api-openapi.yml",
     "serper-search-api-openapi.yml",
     "serper-shopping-api-openapi.yml",
-    "serper-videos-api-openapi.yml"
+    "serper-videos-api-openapi.yml",
+    "serper-scrape-api-openapi.yml",
+    "serper-lens-api-openapi.yml",
+    "serper-locations-api-openapi.yml",
+    "serper-reviews-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
-  "notes": [],
-  "skipped": []
+  "warnings": [
+    "serper-lens-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /lens post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "serper-locations-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /health get, /locations get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "serper-reviews-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /reviews post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "serper-google-search-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "serper-webpage-scrape-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "serper-autocomplete-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-maps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-news-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-patents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-places-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-scholar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-scrape-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-shopping-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "serper-videos-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

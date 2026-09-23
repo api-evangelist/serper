@@ -76,6 +76,18 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+        statusCode:
+          type: integer
+          description: HTTP status code, repeated in the body.
+        error:
+          type: string
+          description: Short error label, present on some responses.
     ScrapeRequest:
       type: object
       required:
@@ -97,18 +109,6 @@ components:
         includeVideos:
           type: boolean
           description: Include videos extracted from the page.
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error description.
-        statusCode:
-          type: integer
-          description: HTTP status code, repeated in the body.
-        error:
-          type: string
-          description: Short error label, present on some responses.
   securitySchemes:
     apiKeyHeader:
       type: apiKey
