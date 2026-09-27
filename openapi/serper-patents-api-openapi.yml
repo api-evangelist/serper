@@ -51,6 +51,33 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
     PatentsSearchResponse:
       type: object
       properties:
@@ -101,27 +128,17 @@ components:
           type: boolean
           description: Whether to enable autocorrect for the query.
           default: true
-    SearchParameters:
+    PatentFigure:
       type: object
       properties:
-        q:
+        imageUrl:
           type: string
-          description: The search query.
-        gl:
+          format: uri
+          description: URL to the full-size patent figure image.
+        thumbnailUrl:
           type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
+          format: uri
+          description: URL to the thumbnail patent figure image.
     PatentResult:
       type: object
       properties:
@@ -179,32 +196,15 @@ components:
         position:
           type: integer
           description: Position in patent results.
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error description.
-    PatentFigure:
-      type: object
-      properties:
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the full-size patent figure image.
-        thumbnailUrl:
-          type: string
-          format: uri
-          description: URL to the thumbnail patent figure image.
   responses:
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key.
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
       content:
         application/json:
           schema:

@@ -58,25 +58,6 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — missing or invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
     ErrorResponse:
       type: object
@@ -119,6 +100,25 @@ components:
         nextPageToken:
           type: string
           description: Opaque cursor returned by a previous call; pass it to fetch the next page. The reviews endpoint uses cursor pagination rather than the page/num pagination used by the search endpoints.
+  responses:
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     apiKeyHeader:
       type: apiKey
