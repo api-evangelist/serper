@@ -94,12 +94,6 @@ components:
           type: string
           description: Time-based search filter, e.g. qdr:d for the past day.
   responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Forbidden:
       description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
       content:
@@ -108,6 +102,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:

@@ -86,12 +86,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error description.
     PeopleAlsoAsk:
       type: object
       properties:
@@ -108,6 +102,33 @@ components:
           type: string
           format: uri
           description: URL of the source page.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+    AnswerBox:
+      type: object
+      properties:
+        snippet:
+          type: string
+          description: Direct answer text.
+        snippetHighlighted:
+          type: array
+          items:
+            type: string
+          description: Highlighted portions of the snippet.
+        title:
+          type: string
+          description: Title of the answer box source.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
+        date:
+          type: string
+          description: Date of the content.
     OrganicResult:
       type: object
       properties:
@@ -137,80 +158,6 @@ components:
         date:
           type: string
           description: Publication date if available.
-    SearchParameters:
-      type: object
-      properties:
-        q:
-          type: string
-          description: The search query.
-        gl:
-          type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
-    AnswerBox:
-      type: object
-      properties:
-        snippet:
-          type: string
-          description: Direct answer text.
-        snippetHighlighted:
-          type: array
-          items:
-            type: string
-          description: Highlighted portions of the snippet.
-        title:
-          type: string
-          description: Title of the answer box source.
-        link:
-          type: string
-          format: uri
-          description: URL of the source page.
-        date:
-          type: string
-          description: Date of the content.
-    KnowledgeGraph:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Title of the knowledge graph entity.
-        type:
-          type: string
-          description: Type/category of the entity.
-        website:
-          type: string
-          format: uri
-          description: Official website URL.
-        imageUrl:
-          type: string
-          format: uri
-          description: URL of the knowledge graph image.
-        description:
-          type: string
-          description: Description of the entity.
-        descriptionSource:
-          type: string
-          description: Source of the description (e.g., Wikipedia).
-        descriptionLink:
-          type: string
-          format: uri
-          description: Link to the description source.
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-          description: Key-value attributes about the entity.
     Sitelink:
       type: object
       properties:
@@ -285,19 +232,66 @@ components:
           description: Related search queries.
           items:
             $ref: '#/components/schemas/RelatedSearch'
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
     RelatedSearch:
       type: object
       properties:
         query:
           type: string
           description: A related search query.
+    KnowledgeGraph:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the knowledge graph entity.
+        type:
+          type: string
+          description: Type/category of the entity.
+        website:
+          type: string
+          format: uri
+          description: Official website URL.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the knowledge graph image.
+        description:
+          type: string
+          description: Description of the entity.
+        descriptionSource:
+          type: string
+          description: Source of the description (e.g., Wikipedia).
+        descriptionLink:
+          type: string
+          format: uri
+          description: Link to the description source.
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Key-value attributes about the entity.
   responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: Unauthorized — invalid or missing API key.
       content:
@@ -306,6 +300,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:

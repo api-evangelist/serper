@@ -67,27 +67,6 @@ components:
           description: News search results.
           items:
             $ref: '#/components/schemas/NewsResult'
-    SearchParameters:
-      type: object
-      properties:
-        q:
-          type: string
-          description: The search query.
-        gl:
-          type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
     SearchRequest:
       type: object
       required:
@@ -154,13 +133,28 @@ components:
         position:
           type: integer
           description: Position in news results.
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
   responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: Unauthorized — invalid or missing API key.
       content:
@@ -169,6 +163,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:

@@ -57,15 +57,6 @@ components:
         message:
           type: string
           description: Human-readable error description.
-    MapsRequest:
-      allOf:
-      - $ref: '#/components/schemas/SearchRequest'
-      - type: object
-        properties:
-          ll:
-            type: string
-            description: 'Latitude/longitude coordinates and zoom level for maps search. Format: @{lat},{lng},{zoom}z'
-            example: '@40.7504178,-73.9824837,14z'
     PlaceResult:
       type: object
       properties:
@@ -117,27 +108,15 @@ components:
         cid:
           type: string
           description: Google Customer ID for the place.
-    SearchParameters:
-      type: object
-      properties:
-        q:
-          type: string
-          description: The search query.
-        gl:
-          type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
+    MapsRequest:
+      allOf:
+      - $ref: '#/components/schemas/SearchRequest'
+      - type: object
+        properties:
+          ll:
+            type: string
+            description: 'Latitude/longitude coordinates and zoom level for maps search. Format: @{lat},{lng},{zoom}z'
+            example: '@40.7504178,-73.9824837,14z'
     SearchRequest:
       type: object
       required:
@@ -178,6 +157,27 @@ components:
           type: boolean
           description: Whether to enable autocorrect for the query.
           default: true
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
     PlacesSearchResponse:
       type: object
       properties:
@@ -189,12 +189,6 @@ components:
           items:
             $ref: '#/components/schemas/PlaceResult'
   responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: Unauthorized — invalid or missing API key.
       content:
@@ -203,6 +197,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:

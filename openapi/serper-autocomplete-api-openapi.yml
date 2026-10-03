@@ -70,12 +70,6 @@ components:
           description: List of autocomplete suggestions.
           items:
             $ref: '#/components/schemas/AutocompleteSuggestion'
-    AutocompleteSuggestion:
-      type: object
-      properties:
-        value:
-          type: string
-          description: Autocomplete suggestion text.
     AutocompleteRequest:
       type: object
       required:
@@ -95,6 +89,12 @@ components:
           description: Language code for results (ISO 639-1).
           example: en
           default: en
+    AutocompleteSuggestion:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Autocomplete suggestion text.
   responses:
     TooManyRequests:
       description: Too many requests — rate limit exceeded or credits exhausted.
