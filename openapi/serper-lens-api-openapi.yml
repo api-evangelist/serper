@@ -57,19 +57,26 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Forbidden:
+      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error description.
-        statusCode:
-          type: integer
-          description: HTTP status code, repeated in the body.
-        error:
-          type: string
-          description: Short error label, present on some responses.
     LensRequest:
       type: object
       required:
@@ -93,25 +100,18 @@ components:
         tbs:
           type: string
           description: Time-based search filter, e.g. qdr:d for the past day.
-  responses:
-    Forbidden:
-      description: 'Forbidden — missing or invalid API key. Observed body on an unauthenticated request: {"message":"Unauthorized. Sign up for a free account.","statusCode":403}'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — missing or invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error description.
+        statusCode:
+          type: integer
+          description: HTTP status code, repeated in the body.
+        error:
+          type: string
+          description: Short error label, present on some responses.
   securitySchemes:
     apiKeyHeader:
       type: apiKey

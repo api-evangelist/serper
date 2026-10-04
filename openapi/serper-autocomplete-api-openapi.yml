@@ -56,20 +56,18 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    AutocompleteSuggestion:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Autocomplete suggestion text.
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
           description: Human-readable error description.
-    AutocompleteResponse:
-      type: object
-      properties:
-        suggestions:
-          type: array
-          description: List of autocomplete suggestions.
-          items:
-            $ref: '#/components/schemas/AutocompleteSuggestion'
     AutocompleteRequest:
       type: object
       required:
@@ -89,21 +87,23 @@ components:
           description: Language code for results (ISO 639-1).
           example: en
           default: en
-    AutocompleteSuggestion:
+    AutocompleteResponse:
       type: object
       properties:
-        value:
-          type: string
-          description: Autocomplete suggestion text.
+        suggestions:
+          type: array
+          description: List of autocomplete suggestions.
+          items:
+            $ref: '#/components/schemas/AutocompleteSuggestion'
   responses:
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key.
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:

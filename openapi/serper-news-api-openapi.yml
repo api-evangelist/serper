@@ -51,6 +51,53 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
+    NewsResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: News article title.
+        link:
+          type: string
+          format: uri
+          description: URL to the news article.
+        snippet:
+          type: string
+          description: Article excerpt or summary.
+        date:
+          type: string
+          description: Publication date or relative time (e.g., "2 weeks ago").
+        source:
+          type: string
+          description: News source name.
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the article thumbnail image.
+        position:
+          type: integer
+          description: Position in news results.
     ErrorResponse:
       type: object
       properties:
@@ -107,53 +154,6 @@ components:
           type: boolean
           description: Whether to enable autocorrect for the query.
           default: true
-    NewsResult:
-      type: object
-      properties:
-        title:
-          type: string
-          description: News article title.
-        link:
-          type: string
-          format: uri
-          description: URL to the news article.
-        snippet:
-          type: string
-          description: Article excerpt or summary.
-        date:
-          type: string
-          description: Publication date or relative time (e.g., "2 weeks ago").
-        source:
-          type: string
-          description: News source name.
-        imageUrl:
-          type: string
-          format: uri
-          description: URL of the article thumbnail image.
-        position:
-          type: integer
-          description: Position in news results.
-    SearchParameters:
-      type: object
-      properties:
-        q:
-          type: string
-          description: The search query.
-        gl:
-          type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
   responses:
     Unauthorized:
       description: Unauthorized — invalid or missing API key.
@@ -161,14 +161,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — missing or invalid parameters.
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
+    BadRequest:
+      description: Bad request — missing or invalid parameters.
       content:
         application/json:
           schema:
