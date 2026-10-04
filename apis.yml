@@ -50,7 +50,6 @@ tags:
 - Reviews
 - Lens
 - Scraping
-- Location
 - SERP API
 - Web Search
 - Agents
@@ -73,7 +72,6 @@ tags_raw:
 - Reviews
 - Lens
 - Scraping
-- Locations
 - SERP API
 - Web Search
 - Agents
@@ -375,3 +373,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 32
   pass: local-v1
+x-tags-removed:
+- Location
