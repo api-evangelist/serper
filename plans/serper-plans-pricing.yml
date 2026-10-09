@@ -135,3 +135,41 @@ creditCosts:
     Not every query costs one credit. Cost varies by search type and by result count —
     see rate-limits/serper-rate-limits.yml for the full multiplier table read from
     Serper's own playground.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free Trial
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Starter
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Standard
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Scale
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Ultimate
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
