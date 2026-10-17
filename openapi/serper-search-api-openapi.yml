@@ -86,6 +86,22 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    PeopleAlsoAsk:
+      type: object
+      properties:
+        question:
+          type: string
+          description: The related question.
+        snippet:
+          type: string
+          description: Brief answer to the question.
+        title:
+          type: string
+          description: Title of the source page.
+        link:
+          type: string
+          format: uri
+          description: URL of the source page.
     Sitelink:
       type: object
       properties:
@@ -96,6 +112,27 @@ components:
           type: string
           format: uri
           description: URL of the sitelink.
+    SearchParameters:
+      type: object
+      properties:
+        q:
+          type: string
+          description: The search query.
+        gl:
+          type: string
+          description: Country code.
+        hl:
+          type: string
+          description: Language code.
+        type:
+          type: string
+          description: The type of search performed.
+        num:
+          type: integer
+          description: Number of results requested.
+        page:
+          type: integer
+          description: Page number.
     KnowledgeGraph:
       type: object
       properties:
@@ -128,78 +165,12 @@ components:
           additionalProperties:
             type: string
           description: Key-value attributes about the entity.
-    SearchParameters:
-      type: object
-      properties:
-        q:
-          type: string
-          description: The search query.
-        gl:
-          type: string
-          description: Country code.
-        hl:
-          type: string
-          description: Language code.
-        type:
-          type: string
-          description: The type of search performed.
-        num:
-          type: integer
-          description: Number of results requested.
-        page:
-          type: integer
-          description: Page number.
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
           description: Human-readable error description.
-    PeopleAlsoAsk:
-      type: object
-      properties:
-        question:
-          type: string
-          description: The related question.
-        snippet:
-          type: string
-          description: Brief answer to the question.
-        title:
-          type: string
-          description: Title of the source page.
-        link:
-          type: string
-          format: uri
-          description: URL of the source page.
-    OrganicResult:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The page title.
-        link:
-          type: string
-          format: uri
-          description: URL of the result.
-        snippet:
-          type: string
-          description: Brief description or excerpt of the page.
-        position:
-          type: integer
-          description: Rank position in search results.
-        sitelinks:
-          type: array
-          description: Sub-links shown beneath the main result.
-          items:
-            $ref: '#/components/schemas/Sitelink'
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-          description: Additional metadata attributes shown in the result.
-        date:
-          type: string
-          description: Publication date if available.
     SearchResponse:
       type: object
       properties:
@@ -230,6 +201,35 @@ components:
         query:
           type: string
           description: A related search query.
+    OrganicResult:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The page title.
+        link:
+          type: string
+          format: uri
+          description: URL of the result.
+        snippet:
+          type: string
+          description: Brief description or excerpt of the page.
+        position:
+          type: integer
+          description: Rank position in search results.
+        sitelinks:
+          type: array
+          description: Sub-links shown beneath the main result.
+          items:
+            $ref: '#/components/schemas/Sitelink'
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional metadata attributes shown in the result.
+        date:
+          type: string
+          description: Publication date if available.
     AnswerBox:
       type: object
       properties:
@@ -292,14 +292,14 @@ components:
           description: Whether to enable autocorrect for the query.
           default: true
   responses:
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key.
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
       content:
         application/json:
           schema:

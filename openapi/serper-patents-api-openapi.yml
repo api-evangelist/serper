@@ -51,6 +51,17 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    PatentFigure:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the full-size patent figure image.
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: URL to the thumbnail patent figure image.
     SearchParameters:
       type: object
       properties:
@@ -135,17 +146,6 @@ components:
         position:
           type: integer
           description: Position in patent results.
-    PatentFigure:
-      type: object
-      properties:
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the full-size patent figure image.
-        thumbnailUrl:
-          type: string
-          format: uri
-          description: URL to the thumbnail patent figure image.
     PatentsSearchResponse:
       type: object
       properties:
@@ -197,14 +197,14 @@ components:
           description: Whether to enable autocorrect for the query.
           default: true
   responses:
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key.
+    TooManyRequests:
+      description: Too many requests — rate limit exceeded or credits exhausted.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    TooManyRequests:
-      description: Too many requests — rate limit exceeded or credits exhausted.
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key.
       content:
         application/json:
           schema:
