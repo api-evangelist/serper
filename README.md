@@ -66,39 +66,206 @@
 
 Serper is the world's fastest and most affordable Google Search API, delivering real-time SERP data in 1-2 seconds via a simple REST interface. It supports web search, images, news, maps, places, videos, shopping, scholar, patents, and autocomplete — all returned as structured JSON. Widely used in AI agents, LLM pipelines, and SEO tooling, Serper uses a credit-based model with 2,500 free queries and volume pricing down to $0.30 per 1,000 requests.
 
-**Website:** https://serper.dev  
-**GitHub:** https://github.com/Serper-API  
-**X:** https://x.com/serperapi  
+**Areas:** Search · SERP · Google Search · Artificial Intelligence · LLM · SEO · Image · News · Maps · Shopping · Reviews · Lens
 
-## APIs
+## Serper on APIs.io
 
-- **Serper Google Search API** — POST `https://google.serper.dev/search` — structured Google SERP results (web, images, news, maps, places, videos, shopping, scholar, patents, autocomplete) authenticated via `X-API-KEY` header.
+Everything profiled for Serper is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/serper/](https://apis.io/providers/serper/)** — or go straight to one of the APIs or properties below.
 
-## Authentication
+### APIs (14)
 
-API key passed as an HTTP header: `X-API-KEY: <your-key>`. Keys are available after creating an account at https://serper.dev.
+- [Serper Autocomplete API](https://apis.io/apis/serper/serper-autocomplete-api/) — Search autocomplete suggestions
+- [Serper Images API](https://apis.io/apis/serper/serper-images-api/) — Image search results
+- [Serper Lens API](https://apis.io/apis/serper/serper-lens-api/) — Google Lens reverse image search from an image URL. Exposed to every playground user; costs 3 credits per query.
+- [Serper Locations API](https://apis.io/apis/serper/serper-locations-api/) — Canonical Google geo-target lookup for the location parameter used by every Serper search endpoint, plus a service health check. The only Serper surface…
+- [Serper Maps API](https://apis.io/apis/serper/serper-maps-api/) — Maps and location search
+- [Serper News API](https://apis.io/apis/serper/serper-news-api/) — News search results
+- [Serper Patents API](https://apis.io/apis/serper/serper-patents-api/) — Patent search results
+- [Serper Places API](https://apis.io/apis/serper/serper-places-api/) — Local business and place search
+- [Serper Reviews API](https://apis.io/apis/serper/serper-reviews-api/) — Google place reviews by cid, fid or placeId, cursor-paginated with nextPageToken. The only Serper endpoint that uses cursor pagination and the only one…
+- [Serper Scholar API](https://apis.io/apis/serper/serper-scholar-api/) — Academic publication search
+- [Serper Search API](https://apis.io/apis/serper/serper-search-api/) — Web search results
+- [Serper Shopping API](https://apis.io/apis/serper/serper-shopping-api/) — Product and shopping search results
+- [Serper Videos API](https://apis.io/apis/serper/serper-videos-api/) — Video search results
+- [Serper Scrape API](https://apis.io/apis/serper/serper-scrape-api/) — Webpage content extraction
 
-## Pricing
+### Published properties
 
-Credit-based model. Credits are purchased in advance and valid for 6 months.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Plan | Credits | Price | Per 1K |
-|------|---------|-------|--------|
-| Free Trial | 2,500 | $0 | — |
-| Starter | 50,000 | $50 | $1.00 |
-| Standard | 500,000 | $375 | $0.75 |
-| Scale | 2,500,000 | $1,250 | $0.50 |
-| Ultimate | 12,500,000 | $3,750 | $0.30 |
+#### MCP servers (1)
 
-Requesting 100 results per page (non-default) doubles credit consumption.
+Model Context Protocol servers that expose the API to agents.
 
-## Rate Limits
+- [Serper MCP](https://apis.io/servers/serper/serper-mcp/)
 
-Default limit on the Ultimate plan is 300 queries per second (~18,000/minute). Lower tiers have lower concurrency limits. Higher limits are available upon request.
+#### Agentic access (1)
 
-## Resources
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [APIs.json](apis.yml)
-- [Plans & Pricing](plans/serper-plans-pricing.yml)
-- [Rate Limits](rate-limits/serper-rate-limits.yml)
-- [FinOps](finops/serper-finops.yml)
+- [Serper Agentic Access](https://apis.io/agentic-access/serper/serper-agentic-access/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [Serper Search Request](https://apis.io/schemas/serper/serper-search-request/)
+- [Serper Search Response](https://apis.io/schemas/serper/serper-search-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Serper Context](https://apis.io/jsonld/serper/serper-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Serper API Vocabulary](https://apis.io/vocabularies/serper/serper-vocabulary/)
+
+#### Examples (6)
+
+Example requests and responses.
+
+- [Serper Autocomplete Example](https://apis.io/examples/serper/serper-autocomplete-example/)
+- [Serper Image Search Example](https://apis.io/examples/serper/serper-image-search-example/)
+- [Serper News Search Example](https://apis.io/examples/serper/serper-news-search-example/)
+- [Serper Scholar Search Example](https://apis.io/examples/serper/serper-scholar-search-example/)
+- [Serper Shopping Search Example](https://apis.io/examples/serper/serper-shopping-search-example/)
+- [Serper Web Search Example](https://apis.io/examples/serper/serper-web-search-example/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Serper Google Search Autocomplete API](https://apis.io/collections/serper/open-serper-autocomplete-api/)
+- [Serper Google Search Autocomplete Images API](https://apis.io/collections/serper/open-serper-images-api/)
+- [Serper Google Search Autocomplete Maps API](https://apis.io/collections/serper/open-serper-maps-api/)
+- [Serper Google Search Autocomplete News API](https://apis.io/collections/serper/open-serper-news-api/)
+- [Serper Google Search Autocomplete Patents API](https://apis.io/collections/serper/open-serper-patents-api/)
+- [Serper Google Search Autocomplete Places API](https://apis.io/collections/serper/open-serper-places-api/)
+- [Serper Google Search Autocomplete Scholar API](https://apis.io/collections/serper/open-serper-scholar-api/)
+- [Serper Google Autocomplete Search API](https://apis.io/collections/serper/open-serper-search-api/)
+- [Serper Google Search Autocomplete Shopping API](https://apis.io/collections/serper/open-serper-shopping-api/)
+- [Serper Google Search Autocomplete Videos API](https://apis.io/collections/serper/open-serper-videos-api/)
+
+#### Overlays (14)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Serper Autocomplete Api Overlay](https://apis.io/overlays/serper/serper-autocomplete-api-overlay/)
+- [Serper Images Api Overlay](https://apis.io/overlays/serper/serper-images-api-overlay/)
+- [Serper Lens Api Overlay](https://apis.io/overlays/serper/serper-lens-api-overlay/)
+- [Serper Locations Api Overlay](https://apis.io/overlays/serper/serper-locations-api-overlay/)
+- [Serper Maps Api Overlay](https://apis.io/overlays/serper/serper-maps-api-overlay/)
+- [Serper News Api Overlay](https://apis.io/overlays/serper/serper-news-api-overlay/)
+- [Serper Patents Api Overlay](https://apis.io/overlays/serper/serper-patents-api-overlay/)
+- [Serper Places Api Overlay](https://apis.io/overlays/serper/serper-places-api-overlay/)
+- [Serper Reviews Api Overlay](https://apis.io/overlays/serper/serper-reviews-api-overlay/)
+- [Serper Scholar Api Overlay](https://apis.io/overlays/serper/serper-scholar-api-overlay/)
+- [Serper Search Api Overlay](https://apis.io/overlays/serper/serper-search-api-overlay/)
+- [Serper Shopping Api Overlay](https://apis.io/overlays/serper/serper-shopping-api-overlay/)
+- [Serper Videos Api Overlay](https://apis.io/overlays/serper/serper-videos-api-overlay/)
+- [Serper Webpage Scrape Api Overlay](https://apis.io/overlays/serper/serper-webpage-scrape-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Serper — jsonschema rules](https://apis.io/rules/serper/serper-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Serper Authentication](https://apis.io/security/serper/serper-authentication/)
+- [Serper Domain Security](https://apis.io/security/serper/serper-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Serper Plans Pricing](https://apis.io/plans/serper/serper-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Serper Rate Limits](https://apis.io/rate-limits/serper/serper-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Serper Finops](https://apis.io/finops/serper/serper-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://serper.dev)
+- [Documentation](https://serper.dev)
+- [Getting started](https://serper.dev/signup)
+- [API reference](https://serper.dev/playground)
+- [Pricing](https://serper.dev/#pricing)
+- [Sign up](https://serper.dev/signup)
+- [Blog](https://medium.com/@serper/list/articles-3f700b49cbc4)
+- [Terms of service](https://serper.dev/terms)
+- [Privacy policy](https://serper.dev/privacy)
+- [Status](https://serper.betteruptime.com)
+
+## API Evangelist rating
+
+**Kin Score 54.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 52.5 |
+| Contract governance | 14.4 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 71.1 |
+
+**Agent readiness 34.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/serper/](https://apis.io/providers/serper/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Serper: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/serper/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
